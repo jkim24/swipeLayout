@@ -1,0 +1,2 @@
+# swipeLayout
+Horizontal swipe layout
