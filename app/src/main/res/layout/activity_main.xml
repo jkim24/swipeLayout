@@ -14,11 +14,15 @@
         android:padding="4dp"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:swipeDirection="left">
+        app:swipeDirection="right">
 
-        <include layout="@layout/bottom_view"/>
+        <include
+            android:id="@+id/bottomView"
+            layout="@layout/bottom_view"/>
 
-        <include layout="@layout/top_view"/>
+        <include
+            android:id="@+id/topView"
+            layout="@layout/top_view"/>
 
     </com.jonkim.swipelayout.SwipeLayout>
 
