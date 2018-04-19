@@ -41,8 +41,9 @@ class SwipeLayout :
     }
 
     private lateinit var viewDragHelper : ViewDragHelper
-    private lateinit var swipeDirection: SwipeDirection
+    private lateinit var swipeDirection : SwipeDirection
     private var status: Status = Status.CLOSED
+    private var isAnimationFinished = true
 
     constructor(context: Context?) : super(context) {
         init()
@@ -144,10 +145,11 @@ class SwipeLayout :
                 return false
             }
         }
-        return super.onInterceptTouchEvent(ev)
+        return true
     }
 
     override fun onAnimationEnd(animation: Animator?) {
+        isAnimationFinished = true
         Log.e("animationEnd", getChildAt(1).x.toString())
     }
 
@@ -180,7 +182,7 @@ class SwipeLayout :
 
     fun open() {
         if (status == Status.CLOSED) {
-            if (swipeDirection == SwipeDirection.LEFT) {
+            if (swipeDirection == SwipeDirection.LEFT && isAnimationFinished) {
                 getChildAt(1).animate()
                         .translationXBy(-(getChildAt(0).width + paddingLeft).toFloat())
                         .translationY(0f)
@@ -188,7 +190,8 @@ class SwipeLayout :
                         .setListener(this)
                         .start()
                 status = Status.OPEN
-            } else if (swipeDirection == SwipeDirection.RIGHT) {
+                isAnimationFinished = false
+            } else if (swipeDirection == SwipeDirection.RIGHT && isAnimationFinished) {
                 getChildAt(1).animate()
                         .translationXBy(getChildAt(0).width + paddingLeft.toFloat())
                         .translationY(0f)
@@ -196,13 +199,14 @@ class SwipeLayout :
                         .setListener(this)
                         .start()
                 status = Status.OPEN
+                isAnimationFinished = false
             }
         }
     }
 
     fun close() {
         if (status == Status.OPEN) {
-            if (swipeDirection == SwipeDirection.LEFT) {
+            if (swipeDirection == SwipeDirection.LEFT && isAnimationFinished) {
                 getChildAt(1).animate()
                         .translationXBy(getChildAt(0).width + paddingLeft.toFloat())
                         .translationY(0f)
@@ -210,7 +214,8 @@ class SwipeLayout :
                         .setListener(this)
                         .start()
                 status = Status.CLOSED
-            } else if (swipeDirection == SwipeDirection.RIGHT) {
+                isAnimationFinished = false
+            } else if (swipeDirection == SwipeDirection.RIGHT && isAnimationFinished) {
                 getChildAt(1).animate()
                         .translationXBy(-(getChildAt(0).width + paddingLeft).toFloat())
                         .translationY(0f)
@@ -218,6 +223,7 @@ class SwipeLayout :
                         .setListener(this)
                         .start()
                 status = Status.CLOSED
+                isAnimationFinished = false
             }
         }
     }
