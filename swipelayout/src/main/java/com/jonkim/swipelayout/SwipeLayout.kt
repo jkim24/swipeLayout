@@ -1,5 +1,6 @@
 package com.jonkim.swipelayout
 
+import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
@@ -9,13 +10,15 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 
 class SwipeLayout :
         FrameLayout,
-        View.OnTouchListener{
+        View.OnTouchListener,
+        Animator.AnimatorListener{
 
     enum class SwipeDirection(var value: Int){
         LEFT(0), RIGHT(1);
@@ -27,9 +30,20 @@ class SwipeLayout :
         }
     }
 
-    private lateinit var viewDragHelper : ViewDragHelper
+    enum class Status(var value: Int) {
+        OPEN(0), CLOSED(1);
 
-    private lateinit var swipeDirection: SwipeDirection
+        companion object {
+            fun from(value: Int): Status {
+                return enumValues<Status>().first { it.value == value }
+            }
+        }
+    }
+
+    private lateinit var viewDragHelper : ViewDragHelper
+    private lateinit var swipeDirection : SwipeDirection
+    private var status: Status = Status.CLOSED
+    private var isAnimationFinished = true
 
     constructor(context: Context?) : super(context) {
         init()
@@ -47,7 +61,6 @@ class SwipeLayout :
                 this.recycle()
             }
         }
-
         init()
     }
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -77,32 +90,43 @@ class SwipeLayout :
         }
 
         override fun onViewReleased(releasedChild: View, xvel: Float, yvel: Float) {
-            Log.e("onViewReleased", "xvel = " + xvel.toString() + "yvel = " + yvel.toString())
             super.onViewReleased(releasedChild, xvel, yvel)
             handleOnViewRelease(releasedChild, xvel, yvel)
         }
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
-            return if (swipeDirection == SwipeDirection.LEFT) {
-                val leftBound = - getChildAt(0).width + paddingLeft
+            if (swipeDirection == SwipeDirection.LEFT) {
+                val leftBound = - getChildAt(0).width
                 val rightBound = paddingRight
 
-                Log.e("clampHorizontal", "dx = " + dx.toString())
-                Log.e("horizontalMin", Math.min(Math.max(left, leftBound), rightBound).toString())
+                val newPos = child.x + dx
+                if (newPos < leftBound) {
+                    child.x = leftBound.toFloat()
+                }
+                else if (newPos > rightBound) {
+                    child.x = rightBound.toFloat()
+                }
+                else
+                    child.x = child.x + dx
+                return 0
 
-
-                Math.min(Math.max(left, leftBound), rightBound)
             } else if (swipeDirection == SwipeDirection.RIGHT) {
                 val leftBound = paddingLeft
-                val rightBound = getChildAt(0).width + paddingRight
+                val rightBound = getChildAt(0).width + paddingRight.times(2)
 
-                Log.e("clampHorizontal", "dx = " + dx.toString())
-                Log.e("horizontalMin", Math.min(Math.max(left, leftBound), rightBound).toString())
-
-
-                Math.min(Math.max(left, leftBound), rightBound)
-            } else super.clampViewPositionHorizontal(child, left, dx)
-
+                val newPos = child.x + dx
+                if (newPos > rightBound) {
+                    child.x = rightBound.toFloat()
+                }
+                else if (newPos < leftBound) {
+                    child.x = leftBound.toFloat()
+                }
+                else
+                    child.x = child.x + dx
+                return 0
+            } else {
+                return super.clampViewPositionHorizontal(child, left, dx)
+            }
         }
     }
 
@@ -121,34 +145,86 @@ class SwipeLayout :
                 return false
             }
         }
-        return super.onInterceptTouchEvent(ev)
+        return true
     }
+
+    override fun onAnimationEnd(animation: Animator?) {
+        isAnimationFinished = true
+        Log.e("animationEnd", getChildAt(1).x.toString())
+    }
+
+    override fun onAnimationStart(animation: Animator?) {}
+
+    override fun onAnimationRepeat(animation: Animator?) {}
+
+    override fun onAnimationCancel(animation: Animator?) {}
 
     private fun handleOnViewRelease(releasedChild: View, xvel: Float, yvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
-//            viewDragHelper.smoothSlideViewTo(releasedChild, -500,0)
-
-            if (releasedChild.x < -(getChildAt(0).width/2)) {
-                releasedChild.x = - getChildAt(0).width + paddingLeft.toFloat()
+            if (releasedChild.x < -(getChildAt(0).width.div(2.0f))) {
+                releasedChild.x = - getChildAt(0).width.toFloat()
+                status = Status.OPEN
             } else {
                 releasedChild.x = paddingRight.toFloat()
+                status = Status.CLOSED
+            }
+        } else if (swipeDirection == SwipeDirection.RIGHT) {
+            if (releasedChild.x > getChildAt(0).width.div(2.0f)) {
+                releasedChild.x = getChildAt(0).width.toFloat() + paddingRight.times(2)
+                status = Status.OPEN
+            } else {
+                releasedChild.x = paddingLeft.toFloat()
+                status = Status.CLOSED
+            }
+        }
+        invalidate()
+    }
+
+    fun open() {
+        if (status == Status.CLOSED) {
+            if (swipeDirection == SwipeDirection.LEFT && isAnimationFinished) {
+                getChildAt(1).animate()
+                        .translationXBy(-(getChildAt(0).width + paddingLeft).toFloat())
+                        .translationY(0f)
+                        .setDuration(300)
+                        .setListener(this)
+                        .start()
+                status = Status.OPEN
+                isAnimationFinished = false
+            } else if (swipeDirection == SwipeDirection.RIGHT && isAnimationFinished) {
+                getChildAt(1).animate()
+                        .translationXBy(getChildAt(0).width + paddingLeft.toFloat())
+                        .translationY(0f)
+                        .setDuration(300)
+                        .setListener(this)
+                        .start()
+                status = Status.OPEN
+                isAnimationFinished = false
             }
         }
     }
 
-    fun open() {
-        //TODO manage when view is already opened
-        val animation = TranslateAnimation(0f, -getChildAt(0).width.toFloat(), 0f, 0f)
-        animation.duration = 300
-        getChildAt(1).startAnimation(animation)
-        animation.fillAfter = true
-    }
-
     fun close() {
-        //TODO manage when view is already closed
-        val animation = TranslateAnimation(-getChildAt(0).width.toFloat(), 0f, 0f, 0f)
-        animation.duration = 300
-        getChildAt(1).startAnimation(animation)
-        animation.fillAfter = true
+        if (status == Status.OPEN) {
+            if (swipeDirection == SwipeDirection.LEFT && isAnimationFinished) {
+                getChildAt(1).animate()
+                        .translationXBy(getChildAt(0).width + paddingLeft.toFloat())
+                        .translationY(0f)
+                        .setDuration(300)
+                        .setListener(this)
+                        .start()
+                status = Status.CLOSED
+                isAnimationFinished = false
+            } else if (swipeDirection == SwipeDirection.RIGHT && isAnimationFinished) {
+                getChildAt(1).animate()
+                        .translationXBy(-(getChildAt(0).width + paddingLeft).toFloat())
+                        .translationY(0f)
+                        .setDuration(300)
+                        .setListener(this)
+                        .start()
+                status = Status.CLOSED
+                isAnimationFinished = false
+            }
+        }
     }
 }
