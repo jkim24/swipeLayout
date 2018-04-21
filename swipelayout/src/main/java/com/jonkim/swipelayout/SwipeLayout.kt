@@ -4,20 +4,14 @@ import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
-import android.support.v4.view.MotionEventCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 
 class SwipeLayout :
         FrameLayout,
-        View.OnTouchListener,
         Animator.AnimatorListener{
 
     enum class SwipeDirection(var value: Int){
@@ -72,7 +66,6 @@ class SwipeLayout :
     }
 
     private fun init() {
-        setOnTouchListener(this)
         viewDragHelper = ViewDragHelper.create(this, dragHelperCallback)
     }
 
@@ -95,42 +88,38 @@ class SwipeLayout :
         }
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
-            if (swipeDirection == SwipeDirection.LEFT) {
-                val leftBound = - getChildAt(0).width
-                val rightBound = paddingRight
+            when (swipeDirection) {
+                SwipeDirection.LEFT -> {
+                    val leftBound = - getChildAt(0).width
+                    val rightBound = paddingRight
 
-                val newPos = child.x + dx
-                if (newPos < leftBound) {
-                    child.x = leftBound.toFloat()
-                }
-                else if (newPos > rightBound) {
-                    child.x = rightBound.toFloat()
-                }
-                else
-                    child.x = child.x + dx
-                return 0
+                    val newPos = child.x + dx
+                    when {
+                        newPos < leftBound -> child.x = leftBound.toFloat()
+                        newPos > rightBound -> child.x = rightBound.toFloat()
+                        else -> child.x = child.x + dx
+                    }
+                    return 0
 
-            } else if (swipeDirection == SwipeDirection.RIGHT) {
-                val leftBound = paddingLeft
-                val rightBound = getChildAt(0).width + paddingRight.times(2)
+                }
+                SwipeDirection.RIGHT -> {
+                    val leftBound = paddingLeft
+                    val rightBound = getChildAt(0).width + paddingRight.times(2)
 
-                val newPos = child.x + dx
-                if (newPos > rightBound) {
-                    child.x = rightBound.toFloat()
+                    val newPos = child.x + dx
+                    when {
+                        newPos > rightBound -> child.x = rightBound.toFloat()
+                        newPos < leftBound -> child.x = leftBound.toFloat()
+                        else -> child.x = child.x + dx
+                    }
+                    return 0
                 }
-                else if (newPos < leftBound) {
-                    child.x = leftBound.toFloat()
-                }
-                else
-                    child.x = child.x + dx
-                return 0
-            } else {
-                return super.clampViewPositionHorizontal(child, left, dx)
+                else -> return super.clampViewPositionHorizontal(child, left, dx)
             }
         }
     }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.apply {
             viewDragHelper.processTouchEvent(this)
         }
@@ -138,19 +127,18 @@ class SwipeLayout :
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        val action = ev?.action
-        action?.apply {
-            if (this == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-                viewDragHelper.cancel()
-                return false
-            }
+        var isBeingDragged = false
+        when (ev?.action) {
+            MotionEvent.ACTION_DOWN -> viewDragHelper.processTouchEvent(ev)
+            MotionEvent.ACTION_MOVE -> isBeingDragged = true
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> viewDragHelper.cancel()
         }
-        return true
+
+        return isBeingDragged
     }
 
     override fun onAnimationEnd(animation: Animator?) {
         isAnimationFinished = true
-        Log.e("animationEnd", getChildAt(1).x.toString())
     }
 
     override fun onAnimationStart(animation: Animator?) {}
