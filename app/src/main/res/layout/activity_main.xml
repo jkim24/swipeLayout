@@ -14,7 +14,7 @@
         android:padding="4dp"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:swipeDirection="right">
+        app:swipeDirection="left">
 
         <include
             android:id="@+id/bottomView"
@@ -54,11 +54,11 @@
         android:padding="4dp"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:swipeDirection="left">
+        app:swipeDirection="right">
 
         <include
             android:id="@+id/secondBottomView"
-            layout="@layout/top_view"/>
+            layout="@layout/second_bottom_view"/>
 
         <include
             android:id="@+id/secondTopView"

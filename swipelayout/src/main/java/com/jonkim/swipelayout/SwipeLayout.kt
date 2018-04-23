@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
@@ -90,7 +91,7 @@ class SwipeLayout :
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
             when (swipeDirection) {
                 SwipeDirection.LEFT -> {
-                    val leftBound = - (getChildAt(0).width + paddingRight)
+                    val leftBound = - getChildAt(0).width
                     val rightBound = paddingRight
 
                     val newPos = child.x + dx
@@ -104,7 +105,7 @@ class SwipeLayout :
                 }
                 SwipeDirection.RIGHT -> {
                     val leftBound = paddingLeft
-                    val rightBound = getChildAt(0).width + paddingLeft
+                    val rightBound = getChildAt(0).width + paddingLeft + paddingRight
 
                     val newPos = child.x + dx
                     when {
@@ -149,16 +150,18 @@ class SwipeLayout :
 
     private fun handleOnViewRelease(releasedChild: View, xvel: Float, yvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
-            if (releasedChild.x < -(getChildAt(0).width.div(2.0f))) {
-                openWithSwipe(true)
-            } else {
-                closeWithSwipe(true)
+            when {
+                xvel < -2500 -> openWithSwipe(true)
+                xvel > 2500 -> closeWithSwipe(true)
+                releasedChild.x < -(getChildAt(0).width.div(2.0f)) -> openWithSwipe(true)
+                releasedChild.x > -(getChildAt(0).width.div(2.0f)) -> closeWithSwipe(true)
             }
         } else if (swipeDirection == SwipeDirection.RIGHT) {
-            if (releasedChild.x > getChildAt(0).width.div(2.0f)) {
-                openWithSwipe(false)
-            } else {
-                closeWithSwipe(false)
+            when {
+                xvel > 2500 -> openWithSwipe(false)
+                xvel < -2500 -> closeWithSwipe(false)
+                releasedChild.x > getChildAt(0).width.div(2.0f) -> openWithSwipe(false)
+                releasedChild.x < getChildAt(0).width.div(2.0f) -> closeWithSwipe(false)
             }
         }
         invalidate()
@@ -168,7 +171,7 @@ class SwipeLayout :
         if (isAnimationFinished) {
             if (getIsLeftSwipe()) {
                 getChildAt(1).animate()
-                        .x(-(getChildAt(0).width + paddingRight).toFloat())
+                        .x(-(getChildAt(0).width).toFloat())
                         .setDuration(300)
                         .setListener(this)
                         .start()
@@ -176,7 +179,7 @@ class SwipeLayout :
                 isAnimationFinished = false
             } else {
                 getChildAt(1).animate()
-                        .x(getChildAt(0).width + paddingLeft.toFloat())
+                        .x(getChildAt(0).width + paddingLeft + paddingRight.toFloat())
                         .setDuration(300)
                         .setListener(this)
                         .start()
@@ -211,7 +214,7 @@ class SwipeLayout :
     private fun openWithSwipe(isLeftSwipe: Boolean) {
         if (isLeftSwipe) {
             getChildAt(1).animate()
-                    .x(-(getChildAt(0).width + paddingRight).toFloat())
+                    .x(-(getChildAt(0).width).toFloat())
                     .setDuration(75)
                     .setListener(this)
                     .start()
@@ -219,7 +222,7 @@ class SwipeLayout :
             isAnimationFinished = false
         } else if (!isLeftSwipe) {
             getChildAt(1).animate()
-                    .x(getChildAt(0).width + paddingLeft.toFloat())
+                    .x(getChildAt(0).width + paddingLeft + paddingRight.toFloat())
                     .setDuration(75)
                     .setListener(this)
                     .start()
