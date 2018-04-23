@@ -8,6 +8,7 @@ import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.widget.FrameLayout
 
 class SwipeLayout :
@@ -39,6 +40,8 @@ class SwipeLayout :
     private var swipeDuration : Long = 150
     private var status: Status = Status.CLOSED
     private var isAnimationFinished = true
+    private var lastX = 0f
+    private var touchSlop = 0
 
     constructor(context: Context?) : super(context) {
         init()
@@ -68,6 +71,7 @@ class SwipeLayout :
     }
 
     private fun init() {
+        touchSlop = ViewConfiguration.get(context).scaledTouchSlop
         viewDragHelper = ViewDragHelper.create(this, dragHelperCallback)
     }
 
@@ -86,7 +90,7 @@ class SwipeLayout :
 
         override fun onViewReleased(releasedChild: View, xvel: Float, yvel: Float) {
             super.onViewReleased(releasedChild, xvel, yvel)
-            handleOnViewRelease(releasedChild, xvel, yvel)
+            handleOnViewRelease(releasedChild, xvel)
         }
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
@@ -131,9 +135,17 @@ class SwipeLayout :
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         var isBeingDragged = false
         when (ev?.action) {
-            MotionEvent.ACTION_DOWN -> viewDragHelper.processTouchEvent(ev)
-            MotionEvent.ACTION_MOVE -> isBeingDragged = true
             MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> viewDragHelper.cancel()
+            MotionEvent.ACTION_DOWN -> {
+                viewDragHelper.processTouchEvent(ev)
+                lastX = ev.x
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val x = ev.x
+                val xDelta = Math.abs(x - lastX)
+                if (xDelta > touchSlop)
+                isBeingDragged = true
+            }
         }
 
         return isBeingDragged
@@ -149,7 +161,7 @@ class SwipeLayout :
 
     override fun onAnimationCancel(animation: Animator?) {}
 
-    private fun handleOnViewRelease(releasedChild: View, xvel: Float, yvel: Float) {
+    private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
             when {
                 xvel < -2500 -> openWithSwipe(true)
