@@ -54,11 +54,18 @@
         android:padding="4dp"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:swipeDirection="right">
+        app:swipeDirection="right"
+        app:swipeDurationInMilis="250">
 
-        <include
+        <!--<include-->
+            <!--android:id="@+id/secondBottomView"-->
+            <!--layout="@layout/second_bottom_view"/>-->
+
+        <View
             android:id="@+id/secondBottomView"
-            layout="@layout/second_bottom_view"/>
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
 
         <include
             android:id="@+id/secondTopView"
@@ -82,6 +89,55 @@
         android:layout_margin="16dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/secondSwipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+
+    <com.jonkim.swipelayout.SwipeLayout
+        android:id="@+id/thirdSwipe"
+        android:layout_below="@id/secondClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:swipeDirection="left"
+        app:swipeDurationInMilis="300">
+
+        <!--<include-->
+            <!--android:id="@+id/thirdTopView"-->
+            <!--layout="@layout/top_view"/>-->
+
+        <View
+            android:id="@+id/thirdBottomView"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
+
+        <View
+            android:id="@+id/thirdTopView"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
+
+
+    </com.jonkim.swipelayout.SwipeLayout>
+
+    <TextView
+        android:id="@+id/thirdOpen"
+        android:text="OPEN"
+        android:layout_margin="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/thirdSwipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/thirdClose"
+        android:text="CLOSE"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/thirdSwipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" />

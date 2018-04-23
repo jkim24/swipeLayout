@@ -43,5 +43,21 @@ class MainActivity : AppCompatActivity() {
         secondTopView.setOnClickListener {
             Toast.makeText(this, "Top View Clicked", Toast.LENGTH_SHORT).show()
         }
+
+        thirdOpen.setOnClickListener {
+            thirdSwipe.open()
+        }
+
+        thirdClose.setOnClickListener {
+            thirdSwipe.close()
+        }
+
+        thirdTopView.setOnClickListener {
+            Toast.makeText(this, "Pink View Clicked", Toast.LENGTH_SHORT).show()
+        }
+
+        thirdBottomView.setOnClickListener {
+            Toast.makeText(this, "Blue View Clicked", Toast.LENGTH_SHORT).show()
+        }
     }
 }

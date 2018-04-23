@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Build
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
@@ -37,6 +36,7 @@ class SwipeLayout :
 
     private lateinit var viewDragHelper : ViewDragHelper
     private lateinit var swipeDirection : SwipeDirection
+    private var swipeDuration : Long = 150
     private var status: Status = Status.CLOSED
     private var isAnimationFinished = true
 
@@ -52,6 +52,7 @@ class SwipeLayout :
         typedArray?.apply {
             try {
                 swipeDirection = SwipeDirection.from(this.getInteger(R.styleable.SwipeLayout_swipeDirection, 0))
+                swipeDuration = this.getInteger(R.styleable.SwipeLayout_swipeDurationInMilis, 150).toLong()
             } finally {
                 this.recycle()
             }
@@ -100,7 +101,7 @@ class SwipeLayout :
                         newPos > rightBound -> child.x = rightBound.toFloat()
                         else -> child.x = child.x + dx
                     }
-                    return 0
+                    return paddingRight
 
                 }
                 SwipeDirection.RIGHT -> {
@@ -113,7 +114,7 @@ class SwipeLayout :
                         newPos < leftBound -> child.x = leftBound.toFloat()
                         else -> child.x = child.x + dx
                     }
-                    return 0
+                    return paddingLeft
                 }
                 else -> return super.clampViewPositionHorizontal(child, left, dx)
             }
@@ -215,7 +216,7 @@ class SwipeLayout :
         if (isLeftSwipe) {
             getChildAt(1).animate()
                     .x(-(getChildAt(0).width).toFloat())
-                    .setDuration(75)
+                    .setDuration(swipeDuration)
                     .setListener(this)
                     .start()
             status = Status.OPEN
@@ -223,7 +224,7 @@ class SwipeLayout :
         } else if (!isLeftSwipe) {
             getChildAt(1).animate()
                     .x(getChildAt(0).width + paddingLeft + paddingRight.toFloat())
-                    .setDuration(75)
+                    .setDuration(swipeDuration)
                     .setListener(this)
                     .start()
             status = Status.OPEN
@@ -236,7 +237,7 @@ class SwipeLayout :
             if (isLeftSwipe) {
                 getChildAt(1).animate()
                         .x(paddingRight.toFloat())
-                        .setDuration(75)
+                        .setDuration(swipeDuration)
                         .setListener(this)
                         .start()
                 status = Status.CLOSED
@@ -244,7 +245,7 @@ class SwipeLayout :
             } else if (!isLeftSwipe) {
                 getChildAt(1).animate()
                         .x(paddingLeft.toFloat())
-                        .setDuration(75)
+                        .setDuration(swipeDuration)
                         .setListener(this)
                         .start()
                 status = Status.CLOSED
