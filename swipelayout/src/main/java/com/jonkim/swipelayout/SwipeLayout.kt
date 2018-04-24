@@ -143,7 +143,7 @@ class SwipeLayout :
             MotionEvent.ACTION_MOVE -> {
                 val x = ev.x
                 val xDelta = Math.abs(x - lastX)
-                if (xDelta > touchSlop)
+                if (xDelta > 13)
                 isBeingDragged = true
             }
         }
@@ -153,6 +153,7 @@ class SwipeLayout :
 
     override fun onAnimationEnd(animation: Animator?) {
         isAnimationFinished = true
+        postInvalidate()
     }
 
     override fun onAnimationStart(animation: Animator?) {}
@@ -164,15 +165,15 @@ class SwipeLayout :
     private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
             when {
-                xvel < -2500 -> openWithSwipe(true)
-                xvel > 2500 -> closeWithSwipe(true)
+                xvel < -1500 -> openWithSwipe(true)
+                xvel > 1500 -> closeWithSwipe(true)
                 releasedChild.x < -(getChildAt(0).width.div(2.0f)) -> openWithSwipe(true)
                 releasedChild.x > -(getChildAt(0).width.div(2.0f)) -> closeWithSwipe(true)
             }
         } else if (swipeDirection == SwipeDirection.RIGHT) {
             when {
-                xvel > 2500 -> openWithSwipe(false)
-                xvel < -2500 -> closeWithSwipe(false)
+                xvel > 1500 -> openWithSwipe(false)
+                xvel < -1500 -> closeWithSwipe(false)
                 releasedChild.x > getChildAt(0).width.div(2.0f) -> openWithSwipe(false)
                 releasedChild.x < getChildAt(0).width.div(2.0f) -> closeWithSwipe(false)
             }
@@ -245,24 +246,22 @@ class SwipeLayout :
     }
 
     private fun closeWithSwipe(isLeftSwipe: Boolean) {
-        if (isAnimationFinished) {
-            if (isLeftSwipe) {
-                getChildAt(1).animate()
-                        .x(paddingRight.toFloat())
-                        .setDuration(swipeDuration)
-                        .setListener(this)
-                        .start()
-                status = Status.CLOSED
-                isAnimationFinished = false
-            } else if (!isLeftSwipe) {
-                getChildAt(1).animate()
-                        .x(paddingLeft.toFloat())
-                        .setDuration(swipeDuration)
-                        .setListener(this)
-                        .start()
-                status = Status.CLOSED
-                isAnimationFinished = false
-            }
+        if (isLeftSwipe) {
+            getChildAt(1).animate()
+                    .x(paddingRight.toFloat())
+                    .setDuration(swipeDuration)
+                    .setListener(this)
+                    .start()
+            status = Status.CLOSED
+            isAnimationFinished = false
+        } else if (!isLeftSwipe) {
+            getChildAt(1).animate()
+                    .x(paddingLeft.toFloat())
+                    .setDuration(swipeDuration)
+                    .setListener(this)
+                    .start()
+            status = Status.CLOSED
+            isAnimationFinished = false
         }
     }
 

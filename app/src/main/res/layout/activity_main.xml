@@ -103,21 +103,22 @@
         app:swipeDirection="left"
         app:swipeDurationInMilis="300">
 
-        <!--<include-->
-            <!--android:id="@+id/thirdTopView"-->
-            <!--layout="@layout/top_view"/>-->
 
-        <View
-            android:id="@+id/thirdBottomView"
-            android:background="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"/>
+        <!--<View-->
+        <!--android:id="@+id/thirdBottomView"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="120dp"/>-->
 
         <View
             android:id="@+id/thirdTopView"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="120dp"/>
+
+        <include
+            android:id="@+id/thirdBottomView"
+            layout="@layout/top_view"/>
 
 
     </com.jonkim.swipelayout.SwipeLayout>
