@@ -1,4 +1,4 @@
-package com.jonkim.swipelayout
+package com.spinz.spinz.ui.home
 
 import android.animation.Animator
 import android.annotation.TargetApi
@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
+import com.jonkim.swipelayout.R
 
 class SwipeLayout :
         FrameLayout,
@@ -55,7 +56,7 @@ class SwipeLayout :
         typedArray?.apply {
             try {
                 swipeDirection = SwipeDirection.from(this.getInteger(R.styleable.SwipeLayout_swipeDirection, 0))
-                swipeDuration = this.getInteger(R.styleable.SwipeLayout_swipeDurationInMilis, 150).toLong()
+                swipeDuration = this.getInteger(R.styleable.SwipeLayout_swipeDurationInMilis, 75).toLong()
             } finally {
                 this.recycle()
             }
@@ -143,8 +144,7 @@ class SwipeLayout :
             MotionEvent.ACTION_MOVE -> {
                 val x = ev.x
                 val xDelta = Math.abs(x - lastX)
-                if (xDelta > 13)
-                isBeingDragged = true
+                if (xDelta > 13) isBeingDragged = true
             }
         }
 
@@ -178,7 +178,6 @@ class SwipeLayout :
                 releasedChild.x < getChildAt(0).width.div(2.0f) -> closeWithSwipe(false)
             }
         }
-        invalidate()
     }
 
     fun open() {
