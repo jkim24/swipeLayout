@@ -1,4 +1,4 @@
-package com.spinz.spinz.ui.home
+package com.jonkim.swipelayout
 
 import android.animation.Animator
 import android.annotation.TargetApi
@@ -10,7 +10,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
-import com.jonkim.swipelayout.R
 
 class SwipeLayout :
         FrameLayout,
@@ -144,7 +143,7 @@ class SwipeLayout :
             MotionEvent.ACTION_MOVE -> {
                 val x = ev.x
                 val xDelta = Math.abs(x - lastX)
-                if (xDelta > 13) isBeingDragged = true
+                if (xDelta > 10) isBeingDragged = true
             }
         }
 

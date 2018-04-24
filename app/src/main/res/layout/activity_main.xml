@@ -54,18 +54,17 @@
         android:padding="4dp"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:swipeDirection="right"
-        app:swipeDurationInMilis="250">
+        app:swipeDirection="right">
 
-        <!--<include-->
-            <!--android:id="@+id/secondBottomView"-->
-            <!--layout="@layout/second_bottom_view"/>-->
-
-        <View
+        <include
             android:id="@+id/secondBottomView"
-            android:background="@color/colorAccent"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"/>
+            layout="@layout/left_bottom_view"/>
+
+        <!--<View-->
+            <!--android:id="@+id/secondBottomView"-->
+            <!--android:background="@color/colorAccent"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="120dp"/>-->
 
         <include
             android:id="@+id/secondTopView"
