@@ -1,21 +1,18 @@
 package com.jonkim.swipelayout
 
-import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
 
 class SwipeLayout :
-        FrameLayout,
-        Animator.AnimatorListener{
+        FrameLayout{
 
     enum class SwipeDirection(var value: Int){
         LEFT(0), RIGHT(1);
@@ -41,7 +38,6 @@ class SwipeLayout :
     private lateinit var swipeDirection : SwipeDirection
     private var swipeDuration : Long = 150
     private var status: Status = Status.CLOSED
-    private var isAnimationFinished = true
     private var lastX = 0f
     private var touchSlop = 0
 
@@ -100,37 +96,23 @@ class SwipeLayout :
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
             when (swipeDirection) {
                 SwipeDirection.LEFT -> {
-//                    Log.e("clamp", "left = " + left + " , dx = " + dx)
-//                    val leftBound = - getChildAt(0).width
-//                    val rightBound = paddingRight
-//
-//                    val newPos = child.x + dx
-//                    when {
-//                        newPos < leftBound -> child.x = leftBound.toFloat()
-//                        newPos > rightBound -> child.x = rightBound.toFloat()
-//                        else -> child.x = child.x + dx
-//                    }
-//                    return paddingRight
-                    if (left > paddingLeft) {
-                        return paddingLeft
+                    if (left > paddingRight) {
+                        return paddingRight
                     }
-                    if (left < paddingLeft - getChildAt(0).width){
+                    if (left < -(paddingRight + getChildAt(0).width)) {
                         return - getChildAt(0).width
                     }
                     return left
 
                 }
                 SwipeDirection.RIGHT -> {
-                    val leftBound = paddingLeft
-                    val rightBound = getChildAt(0).width + paddingLeft + paddingRight
-
-                    val newPos = child.x + dx
-                    when {
-                        newPos > rightBound -> child.x = rightBound.toFloat()
-                        newPos < leftBound -> child.x = leftBound.toFloat()
-                        else -> child.x = child.x + dx
+                    if (left < paddingLeft) {
+                        return paddingLeft
                     }
-                    return paddingLeft
+                    if (left > paddingLeft + getChildAt(0).width) {
+                        return paddingLeft + getChildAt(0).width
+                    }
+                    return left
                 }
                 else -> return super.clampViewPositionHorizontal(child, left, dx)
             }
@@ -139,6 +121,7 @@ class SwipeLayout :
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
+        //TODO
     }
 
     override fun computeScroll() {
@@ -156,69 +139,33 @@ class SwipeLayout :
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-//        var isBeingDragged = false
-//        when (ev?.action) {
-//            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> viewDragHelper.processTouchEvent(ev)
-//            MotionEvent.ACTION_DOWN -> {
-//                viewDragHelper.processTouchEvent(ev)
-//                lastX = ev.x
-//            }
-//            MotionEvent.ACTION_MOVE -> {
-//                val x = ev.x
-//                val xDelta = Math.abs(x - lastX)
-//                if (xDelta > 10) isBeingDragged = true
-//            }
-//        }
-//
-//        return isBeingDragged
+        var isBeingDragged = false
+        when (ev?.action) {
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> viewDragHelper.cancel()
+            MotionEvent.ACTION_DOWN -> {
+                viewDragHelper.processTouchEvent(ev)
+                lastX = ev.x
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val x = ev.x
+                val xDelta = Math.abs(x - lastX)
+                if (xDelta > 10) isBeingDragged = true
+            }
+        }
 
+        return isBeingDragged
 
-        return viewDragHelper.shouldInterceptTouchEvent(ev!!)
+//        return viewDragHelper.shouldInterceptTouchEvent(ev!!)
     }
-
-    override fun onAnimationEnd(animation: Animator?) {
-        isAnimationFinished = true
-//        postInvalidate()
-    }
-
-    override fun onAnimationStart(animation: Animator?) {}
-
-    override fun onAnimationRepeat(animation: Animator?) {}
-
-    override fun onAnimationCancel(animation: Animator?) {}
 
     private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
             when {
-                xvel < -1500 -> {
-                    if (viewDragHelper.settleCapturedViewAt(-getChildAt(0).width, paddingTop)) {
-                        ViewCompat.postInvalidateOnAnimation(this)
-                    }
-                }
-                xvel > 1500 -> {
-                    if (viewDragHelper.settleCapturedViewAt(paddingRight, paddingTop)) {
-                        ViewCompat.postInvalidateOnAnimation(this)
-                    }
-                }
-                releasedChild.x < -(getChildAt(0).width.div(2.0f)) -> {
-                    if (viewDragHelper.settleCapturedViewAt(-getChildAt(0).width, paddingTop)) {
-                        ViewCompat.postInvalidateOnAnimation(this)
-                    }
-                }
-                releasedChild.x > -(getChildAt(0).width.div(2.0f)) -> {
-                    if (viewDragHelper.settleCapturedViewAt(paddingRight, paddingTop)) {
-                        ViewCompat.postInvalidateOnAnimation(this)
-                    }
-                }
+                xvel < -1500 -> openWithSwipe(true)
+                xvel > 1500 -> closeWithSwipe(true)
+                releasedChild.x < -(getChildAt(0).width.div(2.0f)) -> openWithSwipe(true)
+                releasedChild.x > -(getChildAt(0).width.div(2.0f)) -> closeWithSwipe(true)
             }
-
-
-//            when {
-//                xvel < -1500 -> openWithSwipe(true)
-//                xvel > 1500 -> closeWithSwipe(true)
-//                releasedChild.x < -(getChildAt(0).width.div(2.0f)) -> openWithSwipe(true)
-//                releasedChild.x > -(getChildAt(0).width.div(2.0f)) -> closeWithSwipe(true)
-//            }
         } else if (swipeDirection == SwipeDirection.RIGHT) {
             when {
                 xvel > 1500 -> openWithSwipe(false)
@@ -230,92 +177,50 @@ class SwipeLayout :
     }
 
     fun open() {
-        if (isAnimationFinished) {
-        }
         if (getIsLeftSwipe()) {
             if (viewDragHelper.smoothSlideViewTo(getChildAt(1), -getChildAt(0).width, paddingTop)) {
                 ViewCompat.postInvalidateOnAnimation(this)
             }
-//                getChildAt(1).animate()
-//                        .x(-(getChildAt(0).width).toFloat())
-//                        .setDuration(300)
-//                        .setListener(this)
-//                        .start()
-//                status = Status.OPEN
-            isAnimationFinished = false
         } else {
-            getChildAt(1).animate()
-                    .x(getChildAt(0).width + paddingLeft + paddingRight.toFloat())
-                    .setDuration(300)
-                    .setListener(this)
-                    .start()
-            status = Status.OPEN
-            isAnimationFinished = false
+            if (viewDragHelper.smoothSlideViewTo(getChildAt(1), getChildAt(0).width + paddingLeft, paddingTop)) {
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
         }
     }
 
     fun close() {
-//        if (isAnimationFinished) {
-//        }
         if (getIsLeftSwipe()) {
             if (viewDragHelper.smoothSlideViewTo(getChildAt(1), paddingRight, paddingTop)) {
                 ViewCompat.postInvalidateOnAnimation(this)
             }
-//                getChildAt(1).animate()
-//                        .x(paddingRight.toFloat())
-//                        .setDuration(300)
-//                        .setListener(this)
-//                        .start()
-//                status = Status.CLOSED
-            isAnimationFinished = false
         } else {
-            getChildAt(1).animate()
-                    .x(paddingLeft.toFloat())
-                    .setDuration(300)
-                    .setListener(this)
-                    .start()
-            status = Status.CLOSED
-            isAnimationFinished = false
+            if (viewDragHelper.smoothSlideViewTo(getChildAt(1), paddingLeft, paddingTop)) {
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
         }
     }
 
     private fun openWithSwipe(isLeftSwipe: Boolean) {
         if (isLeftSwipe) {
-            getChildAt(1).animate()
-                    .x(-(getChildAt(0).width).toFloat())
-                    .setDuration(swipeDuration)
-                    .setListener(this)
-                    .start()
-            status = Status.OPEN
-            isAnimationFinished = false
+            if (viewDragHelper.settleCapturedViewAt(-getChildAt(0).width, paddingTop)) {
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
         } else if (!isLeftSwipe) {
-            getChildAt(1).animate()
-                    .x(getChildAt(0).width + paddingLeft + paddingRight.toFloat())
-                    .setDuration(swipeDuration)
-                    .setListener(this)
-                    .start()
-            status = Status.OPEN
-            isAnimationFinished = false
+            if (viewDragHelper.settleCapturedViewAt(getChildAt(0).width + paddingLeft, paddingTop)) {
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
         }
     }
 
     private fun closeWithSwipe(isLeftSwipe: Boolean) {
         if (isLeftSwipe) {
-            getChildAt(1).animate()
-                    .x(paddingRight.toFloat())
-                    .setDuration(swipeDuration)
-                    .setListener(this)
-                    .start()
-            status = Status.CLOSED
-            isAnimationFinished = false
+            if (viewDragHelper.settleCapturedViewAt(paddingRight, paddingTop)) {
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
         } else if (!isLeftSwipe) {
-            getChildAt(1).animate()
-                    .x(paddingLeft.toFloat())
-                    .setDuration(swipeDuration)
-                    .setListener(this)
-                    .start()
-            status = Status.CLOSED
-            isAnimationFinished = false
+            if (viewDragHelper.settleCapturedViewAt(paddingLeft, paddingTop)) {
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
         }
     }
 
