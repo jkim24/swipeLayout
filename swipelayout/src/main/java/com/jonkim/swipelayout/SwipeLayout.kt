@@ -112,7 +112,7 @@ class SwipeLayout :
                     if (shouldDisallow) hasDisallowed = true
                     else shouldDisallow = true
                 }
-                parent.parent.requestDisallowInterceptTouchEvent(shouldDisallow)
+                parent.requestDisallowInterceptTouchEvent(shouldDisallow)
 
             }
             return false
