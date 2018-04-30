@@ -127,13 +127,6 @@ class SwipeLayout :
 
         override fun getViewHorizontalDragRange(child: View): Int = getChildAt(0).width
 
-        override fun clampViewPositionVertical(child: View, top: Int, dy: Int): Int {
-            val topBound = paddingTop
-            val bottomBound = paddingBottom
-
-            return Math.min(Math.max(top, topBound), bottomBound)
-        }
-
         override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
             super.onViewPositionChanged(changedView, left, top, dx, dy)
             ViewCompat.postInvalidateOnAnimation(this@SwipeLayout)
@@ -211,8 +204,8 @@ class SwipeLayout :
             var matchParentWidth = false
 
             if (childParams != null) {
-                matchParentHeight = childParams.height == ViewGroup.LayoutParams.MATCH_PARENT || childParams.height == ViewGroup.LayoutParams.FILL_PARENT
-                matchParentWidth = childParams.width == ViewGroup.LayoutParams.MATCH_PARENT || childParams.width == ViewGroup.LayoutParams.FILL_PARENT
+                matchParentHeight = childParams.height == ViewGroup.LayoutParams.MATCH_PARENT
+                matchParentWidth = childParams.width == ViewGroup.LayoutParams.MATCH_PARENT
             }
 
             if (matchParentHeight) {
