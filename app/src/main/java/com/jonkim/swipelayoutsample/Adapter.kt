@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 
 class Adapter(val list : List<String>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 

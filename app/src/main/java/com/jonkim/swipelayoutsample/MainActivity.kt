@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
         list.add("Fifth")
         list.add("Sixth")
         list.add("Seventh")
+        list.add("Eighth")
+        list.add("Ninth")
+        list.add("Tenth")
         return list
     }
 }

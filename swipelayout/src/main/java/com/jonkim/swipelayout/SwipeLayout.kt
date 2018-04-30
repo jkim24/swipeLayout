@@ -9,11 +9,13 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
 import android.util.Log
-import android.view.*
-import android.widget.FrameLayout
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 
 class SwipeLayout :
-        FrameLayout{
+        ViewGroup{
 
     enum class SwipeDirection(var value: Int){
         LEFT(0), RIGHT(1);
@@ -51,9 +53,6 @@ class SwipeLayout :
     private val mRectMainOpen = Rect()
     private val mRectSecClose = Rect()
     private val mRectSecOpen = Rect()
-
-    private var mMinDistRequestDisallowParent = 0
-
 
     constructor(context: Context?) : super(context) {
         init()
@@ -104,17 +103,8 @@ class SwipeLayout :
         override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
             isScrolling = true
 
-            if (parent != null) {
-                var shouldDisallow: Boolean
+            if (parent != null) parent.requestDisallowInterceptTouchEvent(true)
 
-                if (!hasDisallowed) {
-                    shouldDisallow = getDistToClosestEdge() >= mMinDistRequestDisallowParent
-                    if (shouldDisallow) hasDisallowed = true
-                }
-                else shouldDisallow = true
-                parent.requestDisallowInterceptTouchEvent(shouldDisallow)
-
-            }
             return false
         }
     }
@@ -336,62 +326,17 @@ class SwipeLayout :
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-//        var isBeingDragged = false
-//        when (ev?.action) {
-//            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> viewDragHelper.cancel()
-//            MotionEvent.ACTION_DOWN -> {
-//                viewDragHelper.processTouchEvent(ev)
-//                lastX = ev.x
-//            }
-//            MotionEvent.ACTION_MOVE -> {
-//                val x = ev.x
-//                val xDelta = Math.abs(x - lastX)
-//                if (xDelta > 10) isBeingDragged = true
-//            }
-//        }
-//
-//        return isBeingDragged
-//        ev?.apply {
-//            return isTargetView(this) && viewDragHelper.shouldInterceptTouchEvent(this)
-//        }
-//        topView.parent.requestDisallowInterceptTouchEvent(true)
-
-
-
         viewDragHelper.processTouchEvent(ev!!)
         gestureDetector.onTouchEvent(ev)
         accumulateDragDist(ev)
 
         val couldBecomeClick = couldBecomeClick(ev)
         val settling = viewDragHelper.viewDragState == ViewDragHelper.STATE_SETTLING
-        val idleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE
+        val idleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
 
         lastX = ev.x
-//        Log.e("couldBecomeClick", (!couldBecomeClick).toString())
-        Log.e("touchIntercepted", (!couldBecomeClick && (settling || idleAfterScrolled || isScrolling)).toString())
-        return !couldBecomeClick && (settling || idleAfterScrolled || isScrolling)
-    }
-
-    private fun getDistToClosestEdge(): Int {
-        when (swipeDirection) {
-            SwipeDirection.LEFT -> {
-                val pivotRight = mRectMainClose.left + bottomView.width
-
-                return Math.min(
-                        topView.left - mRectMainClose.left,
-                        pivotRight - topView.left
-                )
-            }
-
-            SwipeDirection.RIGHT -> {
-                val pivotLeft = mRectMainClose.right - bottomView.width
-
-                return Math.min(
-                        topView.right - pivotLeft,
-                        mRectMainClose.right - topView.right
-                )
-            }
-        }
+        Log.e("touchIntercepted", (!couldBecomeClick && (settling || idleAfterScrolled)).toString())
+        return !couldBecomeClick && (settling || idleAfterScrolled)
     }
 
     private fun initRects() {
@@ -490,7 +435,6 @@ class SwipeLayout :
 
     private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
-            Log.e("handleReleased", "handleReleased")
             when {
                 xvel < -300 -> openWithSwipe(true)
                 xvel > 300 -> closeWithSwipe(true)
