@@ -112,7 +112,8 @@ class SwipeLayout :
                     if (shouldDisallow) hasDisallowed = true
                     else shouldDisallow = true
                 }
-                parent.requestDisallowInterceptTouchEvent(shouldDisallow)
+                Log.e("onScroll", "dissallow parent = " + shouldDisallow)
+                parent.requestDisallowInterceptTouchEvent(true)
 
             }
             return false
@@ -122,7 +123,8 @@ class SwipeLayout :
     private val dragHelperCallback = object : ViewDragHelper.Callback() {
 
         override fun tryCaptureView(child: View, pointerId: Int): Boolean {
-            return child == getChildAt(1)
+            viewDragHelper.captureChildView(topView, pointerId)
+            return false
         }
 
         override fun getViewHorizontalDragRange(child: View): Int = getChildAt(0).width

@@ -57,57 +57,57 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" />
 
-    <!--<com.jonkim.swipelayout.SwipeLayout-->
-        <!--android:id="@+id/secondSwipe"-->
-        <!--android:layout_below="@id/close"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:clipToPadding="false"-->
-        <!--android:clipChildren="false"-->
-        <!--app:swipeDirection="left"-->
-        <!--app:swipeDurationInMilis="300">-->
+    <com.jonkim.swipelayout.SwipeLayout
+        android:id="@+id/secondSwipe"
+        android:layout_below="@id/close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:swipeDirection="left"
+        app:swipeDurationInMilis="300">
 
-
-        <!--&lt;!&ndash;<View&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/thirdBottomView"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:background="@color/colorPrimary"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="120dp"/>&ndash;&gt;-->
 
         <!--<View-->
-            <!--android:id="@+id/secondTopView"-->
-            <!--android:background="@color/colorAccent"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="120dp"/>-->
+        <!--android:id="@+id/thirdBottomView"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="120dp"/>-->
 
-        <!--<include-->
-            <!--android:id="@+id/secondBottomView"-->
-            <!--layout="@layout/top_view"/>-->
+        <View
+            android:id="@+id/secondTopView"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
 
-    <!--</com.jonkim.swipelayout.SwipeLayout>-->
+        <include
+            android:id="@+id/secondBottomView"
+            layout="@layout/top_view"/>
 
-    <!--<TextView-->
-        <!--android:id="@+id/secondOpen"-->
-        <!--android:text="OPEN"-->
-        <!--android:layout_margin="16dp"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_below="@id/secondSwipe"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentLeft="true" />-->
+    </com.jonkim.swipelayout.SwipeLayout>
 
-    <!--<TextView-->
-        <!--android:id="@+id/secondClose"-->
-        <!--android:text="CLOSE"-->
-        <!--android:layout_margin="16dp"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_below="@id/secondSwipe"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true" />-->
+    <TextView
+        android:id="@+id/secondOpen"
+        android:text="OPEN"
+        android:layout_margin="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/secondSwipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/secondClose"
+        android:text="CLOSE"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/secondSwipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_below="@id/close"
+        android:layout_below="@id/secondClose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
