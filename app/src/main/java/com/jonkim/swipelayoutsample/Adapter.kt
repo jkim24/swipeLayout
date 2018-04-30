@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
+import com.jonkim.swipelayout.SwipeLayout
 
 class Adapter(val list : List<String>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
@@ -17,11 +17,12 @@ class Adapter(val list : List<String>) : RecyclerView.Adapter<Adapter.ViewHolder
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val viewHolder = holder
-        viewHolder.textView.setText(list.get(position))
+        holder.textView.text = list[position]
+        if (holder.swipeLayout.isOpen()) holder.swipeLayout.close()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var swipeLayout : SwipeLayout = itemView.findViewById(R.id.swipe)
         var textView : TextView = itemView.findViewById(R.id.mainLayoutTv)
     }
 }
