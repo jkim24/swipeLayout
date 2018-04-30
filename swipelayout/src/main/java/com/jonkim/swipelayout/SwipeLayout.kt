@@ -105,15 +105,14 @@ class SwipeLayout :
             isScrolling = true
 
             if (parent != null) {
-                var shouldDisallow = false
+                var shouldDisallow: Boolean
 
                 if (!hasDisallowed) {
                     shouldDisallow = getDistToClosestEdge() >= mMinDistRequestDisallowParent
                     if (shouldDisallow) hasDisallowed = true
-                    else shouldDisallow = true
                 }
-                Log.e("onScroll", "dissallow parent = " + shouldDisallow)
-                parent.requestDisallowInterceptTouchEvent(true)
+                else shouldDisallow = true
+                parent.requestDisallowInterceptTouchEvent(shouldDisallow)
 
             }
             return false

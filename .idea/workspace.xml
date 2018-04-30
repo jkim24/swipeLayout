@@ -10,20 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dc47b85-40bc-495c-834f-174906fc8a48" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/resourceHashesCache.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/resourceHashesCache.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/jarAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/jarAnalysis.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskJars.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskJars.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt" afterPath="$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
       <change beforePath="$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt" afterPath="$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,8 +38,8 @@
           <file leaf-file-name="SwipeLayout.kt" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1690">
-                  <caret line="132" column="71" lean-forward="false" selection-start-line="132" selection-start-column="71" selection-end-line="132" selection-end-column="71" />
+                <state relative-caret-position="2214">
+                  <caret line="123" column="75" lean-forward="true" selection-start-line="123" selection-start-column="75" selection-end-line="123" selection-end-column="75" />
                   <folding>
                     <element signature="e#32#407#0" expanded="true" />
                   </folding>
@@ -3328,9 +3314,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/swipe_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/bottom_list_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/top_list_item.xml" />
-        <option value="$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt" />
       </list>
     </option>
   </component>
@@ -3708,7 +3694,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>331</line>
+          <line>330</line>
           <properties />
           <option name="timeStamp" value="82" />
         </line-breakpoint>
@@ -4198,8 +4184,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1690">
-          <caret line="132" column="71" lean-forward="false" selection-start-line="132" selection-start-column="71" selection-end-line="132" selection-end-column="71" />
+        <state relative-caret-position="2214">
+          <caret line="123" column="75" lean-forward="true" selection-start-line="123" selection-start-column="75" selection-end-line="123" selection-end-column="75" />
           <folding>
             <element signature="e#32#407#0" expanded="true" />
           </folding>
