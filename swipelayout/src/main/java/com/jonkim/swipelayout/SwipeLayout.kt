@@ -230,9 +230,9 @@ class SwipeLayout :
         initRects()
 
         if (mIsOpenBeforeInit) {
-            open()
+            openWithoutAnimation()
         } else {
-            close()
+            closeWithoutAnimation()
         }
 
     }
@@ -335,7 +335,6 @@ class SwipeLayout :
         val idleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
 
         lastX = ev.x
-        Log.e("touchIntercepted", (!couldBecomeClick && (settling || idleAfterScrolled)).toString())
         return !couldBecomeClick && (settling || idleAfterScrolled)
     }
 
@@ -472,6 +471,22 @@ class SwipeLayout :
             if (viewDragHelper.smoothSlideViewTo(topView, paddingLeft, paddingTop)) {
                 ViewCompat.postInvalidateOnAnimation(this)
             }
+        }
+    }
+
+    private fun openWithoutAnimation() {
+        if (getIsLeftSwipe()) {
+            topView.translationX = bottomView.width.unaryMinus().toFloat()
+        } else {
+            topView.translationX = bottomView.width.toFloat()
+        }
+    }
+
+    private fun closeWithoutAnimation() {
+        if (getIsLeftSwipe()) {
+            topView.translationX = paddingRight.toFloat()
+        } else {
+            topView.translationX = paddingLeft.toFloat()
         }
     }
 
