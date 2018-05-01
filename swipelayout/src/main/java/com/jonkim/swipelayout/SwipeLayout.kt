@@ -8,6 +8,7 @@ import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -49,10 +50,6 @@ class SwipeLayout :
     private var lastX = 0f
     private var isScrolling = false
     private var mIsOpenBeforeInit = false
-    private val mRectMainClose = Rect()
-    private val mRectMainOpen = Rect()
-    private val mRectSecClose = Rect()
-    private val mRectSecOpen = Rect()
 
     constructor(context: Context?) : super(context) {
         init()
@@ -171,161 +168,19 @@ class SwipeLayout :
             topViewYOffSet = topView.top
         }
     }
-
+    //TODO MANAGE VIEWHOLDER RESET
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, left, top, right, bottom)
         topView.offsetLeftAndRight(topViewXOffSet)
         topView.offsetTopAndBottom(topViewYOffSet)
         if (mIsOpenBeforeInit) {
+            Log.e("onLayout", "mIsOpenBeforeInit = TRUE" + mIsOpenBeforeInit)
             openWithoutAnimation()
         } else {
+            Log.e("onLayout", "mIsOpenBeforeInit = FALSE" + mIsOpenBeforeInit)
             closeWithoutAnimation()
         }
     }
-
-//    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-//        for (index in 0 until childCount) {
-//            val child = getChildAt(index)
-//
-//            var left = 0
-//            var right = 0
-//            var top = 0
-//            var bottom = 0
-//
-//            val minLeft = paddingLeft
-//            val maxRight = Math.max(r - paddingRight - l, 0)
-//            val minTop = paddingTop
-//            val maxBottom = Math.max(b - paddingBottom - t, 0)
-//
-//            var measuredChildHeight = child.measuredHeight
-//            var measuredChildWidth = child.measuredWidth
-//
-//            // need to take account if child size is match_parent
-//            val childParams = child.layoutParams
-//            var matchParentHeight = false
-//            var matchParentWidth = false
-//
-//            if (childParams != null) {
-//                matchParentHeight = childParams.height == ViewGroup.LayoutParams.MATCH_PARENT
-//                matchParentWidth = childParams.width == ViewGroup.LayoutParams.MATCH_PARENT
-//            }
-//
-//            if (matchParentHeight) {
-//                measuredChildHeight = maxBottom - minTop
-//                childParams!!.height = measuredChildHeight
-//            }
-//
-//            if (matchParentWidth) {
-//                measuredChildWidth = maxRight - minLeft
-//                childParams!!.width = measuredChildWidth
-//            }
-//
-//            when (swipeDirection) {
-//                SwipeDirection.LEFT -> {
-//                    left = Math.max(r - measuredChildWidth - paddingRight - l, minLeft)
-//                    top = Math.min(paddingTop, maxBottom)
-//                    right = Math.max(r - paddingRight - l, minLeft)
-//                    bottom = Math.min(measuredChildHeight + paddingTop, maxBottom)
-//                }
-//
-//                SwipeDirection.RIGHT -> {
-//                    left = Math.min(paddingLeft, maxRight)
-//                    top = Math.min(paddingTop, maxBottom)
-//                    right = Math.min(measuredChildWidth + paddingLeft, maxRight)
-//                    bottom = Math.min(measuredChildHeight + paddingTop, maxBottom)
-//                }
-//            }
-//
-//            child.layout(left, top, right, bottom)
-//        }
-//        initRects()
-//
-//        if (mIsOpenBeforeInit) {
-//            openWithoutAnimation()
-//        } else {
-//            closeWithoutAnimation()
-//        }
-//
-//    }
-//
-//    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-//        if (childCount < 2) {
-//            throw RuntimeException("Layout must have two children")
-//        }
-//
-//        val params = layoutParams
-//
-//        val widthMode = View.MeasureSpec.getMode(widthMeasureSpec)
-//        val heightMode = View.MeasureSpec.getMode(heightMeasureSpec)
-//
-//        var desiredWidth = 0
-//        var desiredHeight = 0
-//
-//        // first find the largest child
-//        for (i in 0 until childCount) {
-//            val child = getChildAt(i)
-//            measureChild(child, widthMeasureSpec, heightMeasureSpec)
-//            desiredWidth = Math.max(child.measuredWidth, desiredWidth)
-//            desiredHeight = Math.max(child.measuredHeight, desiredHeight)
-//        }
-//        // create new measure spec using the largest child width
-//        val newWidthMeasureSpec = View.MeasureSpec.makeMeasureSpec(desiredWidth, widthMode)
-//        val newHeightMeasureSpec = View.MeasureSpec.makeMeasureSpec(desiredHeight, heightMode)
-//
-//        val measuredWidth = View.MeasureSpec.getSize(newWidthMeasureSpec)
-//        val measuredHeight = View.MeasureSpec.getSize(newHeightMeasureSpec)
-//
-//        for (i in 0 until childCount) {
-//            val child = getChildAt(i)
-//            val childParams = child.layoutParams
-//
-//            if (childParams != null) {
-//                if (childParams.height == ViewGroup.LayoutParams.MATCH_PARENT) {
-//                    child.minimumHeight = measuredHeight
-//                }
-//
-//                if (childParams.width == ViewGroup.LayoutParams.MATCH_PARENT) {
-//                    child.minimumWidth = measuredWidth
-//                }
-//            }
-//
-//            measureChild(child, newWidthMeasureSpec, newHeightMeasureSpec)
-//            desiredWidth = Math.max(child.measuredWidth, desiredWidth)
-//            desiredHeight = Math.max(child.measuredHeight, desiredHeight)
-//        }
-//
-//        // taking accounts of padding
-//        desiredWidth += paddingLeft + paddingRight
-//        desiredHeight += paddingTop + paddingBottom
-//
-//        // adjust desired width
-//        if (widthMode == View.MeasureSpec.EXACTLY) {
-//            desiredWidth = measuredWidth
-//        } else {
-//            if (params.width == ViewGroup.LayoutParams.MATCH_PARENT) {
-//                desiredWidth = measuredWidth
-//            }
-//
-//            if (widthMode == View.MeasureSpec.AT_MOST) {
-//                desiredWidth = if (desiredWidth > measuredWidth) measuredWidth else desiredWidth
-//            }
-//        }
-//
-//        // adjust desired height
-//        if (heightMode == View.MeasureSpec.EXACTLY) {
-//            desiredHeight = measuredHeight
-//        } else {
-//            if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
-//                desiredHeight = measuredHeight
-//            }
-//
-//            if (heightMode == View.MeasureSpec.AT_MOST) {
-//                desiredHeight = if (desiredHeight > measuredHeight) measuredHeight else desiredHeight
-//            }
-//        }
-//
-//        setMeasuredDimension(desiredWidth, desiredHeight)
-//    }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.apply {
@@ -347,70 +202,6 @@ class SwipeLayout :
 
         lastX = ev.x
         return !couldBecomeClick && (settling || idleAfterScrolled)
-    }
-
-    private fun initRects() {
-        // close position of main view
-        mRectMainClose.set(
-                topView.left,
-                topView.top,
-                topView.right,
-                topView.bottom
-        )
-
-        // close position of secondary view
-        mRectSecClose.set(
-                bottomView.left,
-                bottomView.top,
-                bottomView.right,
-                bottomView.bottom
-        )
-
-        // open position of the main view
-        mRectMainOpen.set(
-                getMainOpenLeft(),
-                getMainOpenTop(),
-                getMainOpenLeft() + topView.width,
-                getMainOpenTop() + topView.height
-        )
-
-        // open position of the secondary view
-        mRectSecOpen.set(
-                getSecOpenLeft(),
-                getSecOpenTop(),
-                getSecOpenLeft() + bottomView.width,
-                getSecOpenTop() + bottomView.height
-        )
-    }
-
-    private fun getMainOpenLeft(): Int {
-        when (swipeDirection) {
-            SwipeDirection.LEFT -> return mRectMainClose.left + bottomView.width
-
-            SwipeDirection.RIGHT -> return mRectMainClose.left - bottomView.width
-
-
-            else -> return 0
-        }
-    }
-
-    private fun getMainOpenTop(): Int {
-        when (swipeDirection) {
-            SwipeDirection.LEFT -> return mRectMainClose.top
-
-            SwipeDirection.RIGHT -> return mRectMainClose.top
-
-
-            else -> return 0
-        }
-    }
-
-    private fun getSecOpenLeft(): Int {
-        return mRectSecClose.left
-    }
-
-    private fun getSecOpenTop(): Int {
-        return mRectSecClose.top
     }
 
     private fun couldBecomeClick(ev: MotionEvent): Boolean {
@@ -488,20 +279,24 @@ class SwipeLayout :
     }
 
     fun openWithoutAnimation() {
+        mIsOpenBeforeInit = true
         if (getIsLeftSwipe()) {
             topView.x = bottomView.width.unaryMinus().toFloat()
         } else {
             topView.x = bottomView.width.toFloat()
         }
+        ViewCompat.postInvalidateOnAnimation(this)
         state = State.OPEN
     }
 
     fun closeWithoutAnimation() {
+        mIsOpenBeforeInit = false
         if (getIsLeftSwipe()) {
             topView.x = paddingRight.toFloat()
         } else {
             topView.x = paddingLeft.toFloat()
         }
+        ViewCompat.postInvalidateOnAnimation(this)
         state = State.CLOSED
     }
 

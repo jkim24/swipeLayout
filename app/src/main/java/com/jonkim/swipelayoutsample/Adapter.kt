@@ -1,6 +1,7 @@
 package com.jonkim.swipelayoutsample
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,10 @@ class Adapter(val list : List<String>) : RecyclerView.Adapter<Adapter.ViewHolder
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = list[position]
-        if (holder.swipeLayout.isOpen()) holder.swipeLayout.close()
+        if (holder.swipeLayout.isOpen()) {
+            Log.e("onBind", "triedToClose")
+            holder.swipeLayout.closeWithoutAnimation()
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
