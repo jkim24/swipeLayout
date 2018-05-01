@@ -237,10 +237,22 @@ class SwipeLayout :
     private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
             when {
-                xvel < -300 -> openWithSwipe(true)
-                xvel > 300 -> closeWithSwipe(true)
-                releasedChild.x < bottomView.width.div(2.0f).unaryMinus() -> openWithSwipe(true)
-                releasedChild.x > bottomView.width.div(2.0f).unaryMinus() -> closeWithSwipe(true)
+                xvel < -300 -> less@ {
+                    openWithSwipe(true)
+                    return@less
+                }
+                xvel > 300 -> greater@{
+                    closeWithSwipe(true)
+                    return@greater
+                }
+                releasedChild.x < bottomView.width.div(2.0f).unaryMinus() -> lesserPosition@{
+                    openWithSwipe(true)
+                    return@lesserPosition
+                }
+                releasedChild.x > bottomView.width.div(2.0f).unaryMinus() -> greaterPosition@{
+                    closeWithSwipe(true)
+                    return@greaterPosition
+                }
             }
         } else if (swipeDirection == SwipeDirection.RIGHT) {
             when {
@@ -250,6 +262,17 @@ class SwipeLayout :
                 releasedChild.x < bottomView.width.div(2.0f) -> closeWithSwipe(false)
             }
         }
+    }
+
+    private fun computeSurfaceLayoutArea(open: Boolean): Rect {
+        var l = paddingLeft
+        if (open) {
+            if (swipeDirection == SwipeDirection.RIGHT)
+                l = paddingLeft + dragDistance.toInt()
+            else if (swipeDirection == SwipeDirection.LEFT)
+                l = paddingLeft - dragDistance.toInt()
+        }
+        return Rect(l, paddingTop, l + measuredWidth, measuredHeight)
     }
 
     fun open() {
@@ -281,7 +304,9 @@ class SwipeLayout :
     fun openWithoutAnimation() {
         mIsOpenBeforeInit = true
         if (getIsLeftSwipe()) {
-            topView.x = bottomView.width.unaryMinus().toFloat()
+            val rect = computeSurfaceLayoutArea(true)
+            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
+            ViewCompat.postInvalidateOnAnimation(this)
         } else {
             topView.x = bottomView.width.toFloat()
         }
@@ -292,7 +317,9 @@ class SwipeLayout :
     fun closeWithoutAnimation() {
         mIsOpenBeforeInit = false
         if (getIsLeftSwipe()) {
-            topView.x = paddingRight.toFloat()
+            val rect = computeSurfaceLayoutArea(false)
+            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
+            ViewCompat.postInvalidateOnAnimation(this)
         } else {
             topView.x = paddingLeft.toFloat()
         }
