@@ -8,7 +8,6 @@ import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -164,20 +163,17 @@ class SwipeLayout :
         if (viewDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this)
         } else {
-            topViewXOffSet = topView.left
-            topViewYOffSet = topView.top
+//            topViewXOffSet = topView.left
+//            topViewYOffSet = topView.top
         }
     }
-    //TODO MANAGE VIEWHOLDER RESET
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        topView.offsetLeftAndRight(topViewXOffSet)
-        topView.offsetTopAndBottom(topViewYOffSet)
+//        topView.offsetLeftAndRight(topViewXOffSet)
+//        topView.offsetTopAndBottom(topViewYOffSet)
         if (mIsOpenBeforeInit) {
-            Log.e("onLayout", "mIsOpenBeforeInit = TRUE" + mIsOpenBeforeInit)
             openWithoutAnimation()
         } else {
-            Log.e("onLayout", "mIsOpenBeforeInit = FALSE" + mIsOpenBeforeInit)
             closeWithoutAnimation()
         }
     }
@@ -303,26 +299,16 @@ class SwipeLayout :
 
     fun openWithoutAnimation() {
         mIsOpenBeforeInit = true
-        if (getIsLeftSwipe()) {
-            val rect = computeSurfaceLayoutArea(true)
-            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
-            ViewCompat.postInvalidateOnAnimation(this)
-        } else {
-            topView.x = bottomView.width.toFloat()
-        }
+        val rect = computeSurfaceLayoutArea(true)
+        topView.layout(rect.left, rect.top, rect.right, rect.bottom)
         ViewCompat.postInvalidateOnAnimation(this)
         state = State.OPEN
     }
 
     fun closeWithoutAnimation() {
         mIsOpenBeforeInit = false
-        if (getIsLeftSwipe()) {
-            val rect = computeSurfaceLayoutArea(false)
-            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
-            ViewCompat.postInvalidateOnAnimation(this)
-        } else {
-            topView.x = paddingLeft.toFloat()
-        }
+        val rect = computeSurfaceLayoutArea(false)
+        topView.layout(rect.left, rect.top, rect.right, rect.bottom)
         ViewCompat.postInvalidateOnAnimation(this)
         state = State.CLOSED
     }

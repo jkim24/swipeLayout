@@ -7,7 +7,7 @@
     android:layout_height="120dp"
     android:clipToPadding="false"
     android:clipChildren="false"
-    app:swipeDirection="left">
+    app:swipeDirection="right">
 
     <include
         android:id="@+id/bottomView"
