@@ -5,6 +5,7 @@
             <enum name="left" value="0"/>
             <enum name="right" value="1"/>
         </attr>
-        <attr name="swipeDurationInMilis" format="integer"/>
+        <attr name="minDragSpeed" format="integer"/>
+        <attr name="dragSensitivity" format="float"/>
     </declare-styleable>
 </resources>

@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Rect
 import android.os.Build
+import android.support.annotation.Nullable
 import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
@@ -43,7 +44,8 @@ class SwipeLayout :
     private lateinit var topView : View
     private lateinit var bottomView : View
     private var state : State = State.CLOSED
-    private var swipeDuration : Long = 150
+    private var dragSensitivity : Float = 1f
+    private var minDragSpeed : Int = 300
     private var topViewXOffSet : Int = 0
     private var topViewYOffSet : Int = 0
     private var dragDistance : Float = 0f
@@ -51,9 +53,20 @@ class SwipeLayout :
     private var isScrolling = false
 
     constructor(context: Context?) : super(context) {
-        init()
+        init(context, null)
     }
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        init(context, attrs)
+    }
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init(context, attrs)
+    }
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        init(context, attrs)
+    }
+
+    private fun init(context: Context?, @Nullable attrs: AttributeSet?) {
         val typedArray = context?.obtainStyledAttributes(
                 attrs,
                 R.styleable.SwipeLayout,
@@ -62,23 +75,14 @@ class SwipeLayout :
         typedArray?.apply {
             try {
                 swipeDirection = SwipeDirection.from(this.getInteger(R.styleable.SwipeLayout_swipeDirection, 0))
-                swipeDuration = this.getInteger(R.styleable.SwipeLayout_swipeDurationInMilis, 75).toLong()
+                minDragSpeed = this.getInteger(R.styleable.SwipeLayout_minDragSpeed, 300)
+                dragSensitivity = this.getFloat(R.styleable.SwipeLayout_dragSensitivity, 1f)
             } finally {
                 this.recycle()
             }
         }
-        init()
-    }
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init()
-    }
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init()
-    }
 
-    private fun init() {
-        viewDragHelper = ViewDragHelper.create(this, 1.5f,dragHelperCallback)
+        viewDragHelper = ViewDragHelper.create(this, dragSensitivity, dragHelperCallback)
         gestureDetector = GestureDetectorCompat(context, gestureListener)
     }
 
@@ -233,15 +237,15 @@ class SwipeLayout :
     private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
             when {
-                xvel < -300 -> openWithSwipe(true)
-                xvel > 300 -> closeWithSwipe(true)
+                xvel < minDragSpeed.unaryMinus() -> openWithSwipe(true)
+                xvel > minDragSpeed -> closeWithSwipe(true)
                 releasedChild.x < bottomView.width.div(2.0f).unaryMinus() -> openWithSwipe(true)
                 releasedChild.x > bottomView.width.div(2.0f).unaryMinus() -> closeWithSwipe(true)
             }
         } else if (swipeDirection == SwipeDirection.RIGHT) {
             when {
-                xvel > 300 -> openWithSwipe(false)
-                xvel < -300 -> closeWithSwipe(false)
+                xvel > minDragSpeed -> openWithSwipe(false)
+                xvel < minDragSpeed.unaryMinus() -> closeWithSwipe(false)
                 releasedChild.x > bottomView.width.div(2.0f) -> openWithSwipe(false)
                 releasedChild.x < bottomView.width.div(2.0f) -> closeWithSwipe(false)
             }
