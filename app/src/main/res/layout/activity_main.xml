@@ -5,57 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:auto="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="4dp"
-        auto:cardCornerRadius="2dp"
-        auto:cardElevation="4dp">
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/cardView"-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:auto="http://schemas.android.com/apk/res-auto"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="120dp"-->
+        <!--android:layout_margin="4dp"-->
+        <!--auto:cardCornerRadius="2dp"-->
+        <!--auto:cardElevation="4dp">-->
 
-        <com.jonkim.swipelayout.SwipeLayout
-            android:id="@+id/firstSwipe"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            app:swipeDirection="left">
+        <!--<com.jonkim.swipelayout.SwipeLayout-->
+            <!--android:id="@+id/firstSwipe"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="120dp"-->
+            <!--android:clipToPadding="false"-->
+            <!--android:clipChildren="false"-->
+            <!--app:swipeDirection="left">-->
 
-            <include
-                android:id="@+id/bottomView"
-                layout="@layout/bottom_view"/>
+            <!--<include-->
+                <!--android:id="@+id/bottomView"-->
+                <!--layout="@layout/bottom_view"/>-->
 
-            <include
-                android:id="@+id/topView"
-                layout="@layout/top_view"/>
+            <!--<include-->
+                <!--android:id="@+id/topView"-->
+                <!--layout="@layout/top_view"/>-->
 
-        </com.jonkim.swipelayout.SwipeLayout>
+        <!--</com.jonkim.swipelayout.SwipeLayout>-->
 
-    </android.support.v7.widget.CardView>
+    <!--</android.support.v7.widget.CardView>-->
 
 
-    <TextView
-        android:id="@+id/open"
-        android:text="OPEN"
-        android:layout_margin="16dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true" />
+    <!--<TextView-->
+        <!--android:id="@+id/open"-->
+        <!--android:text="OPEN"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@id/cardView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true" />-->
 
-    <TextView
-        android:id="@+id/close"
-        android:text="CLOSE"
-        android:layout_margin="16dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" />
+    <!--<TextView-->
+        <!--android:id="@+id/close"-->
+        <!--android:text="CLOSE"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_below="@id/cardView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true" />-->
 
     <!--<com.jonkim.swipelayout.SwipeLayout-->
         <!--android:id="@+id/secondSwipe"-->
@@ -91,7 +91,6 @@
         android:text="OPEN"
         android:layout_margin="16dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true" />
@@ -101,7 +100,6 @@
         android:text="CLOSE"
         android:layout_margin="16dp"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" />

@@ -18,12 +18,12 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        open.setOnClickListener {
-            firstSwipe.open(false)
-        }
-        close.setOnClickListener {
-            firstSwipe.close(false)
-        }
+//        open.setOnClickListener {
+//            firstSwipe.open(false)
+//        }
+//        close.setOnClickListener {
+//            firstSwipe.close(false)
+//        }
 //        bottomView.setOnClickListener {
 //            Toast.makeText(this, "Bottom View Clicked", Toast.LENGTH_SHORT).show()
 //        }

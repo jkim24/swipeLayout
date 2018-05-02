@@ -240,9 +240,9 @@ class SwipeLayout :
         var l = paddingLeft
         if (open) {
             if (swipeDirection == SwipeDirection.RIGHT)
-                l = paddingLeft + dragDistance.toInt()
+                l = paddingLeft + bottomView.width
             else if (swipeDirection == SwipeDirection.LEFT)
-                l = paddingLeft - dragDistance.toInt()
+                l = paddingLeft - bottomView.width
         }
         return Rect(l, paddingTop, l + measuredWidth, measuredHeight)
     }
