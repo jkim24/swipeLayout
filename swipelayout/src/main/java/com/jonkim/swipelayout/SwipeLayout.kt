@@ -130,8 +130,8 @@ class SwipeLayout :
                     if (left > paddingRight) {
                         return paddingRight
                     }
-                    if (left < -(getChildAt(0).width)) {
-                        return - getChildAt(0).width
+                    if (left < (paddingRight + bottomView.width).unaryMinus()) {
+                        return (paddingRight + bottomView.width).unaryMinus()
                     }
                     return left
 
@@ -233,22 +233,10 @@ class SwipeLayout :
     private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
             when {
-                xvel < -300 -> less@ {
-                    openWithSwipe(true)
-                    return@less
-                }
-                xvel > 300 -> greater@{
-                    closeWithSwipe(true)
-                    return@greater
-                }
-                releasedChild.x < bottomView.width.div(2.0f).unaryMinus() -> lesserPosition@{
-                    openWithSwipe(true)
-                    return@lesserPosition
-                }
-                releasedChild.x > bottomView.width.div(2.0f).unaryMinus() -> greaterPosition@{
-                    closeWithSwipe(true)
-                    return@greaterPosition
-                }
+                xvel < -300 -> openWithSwipe(true)
+                xvel > 300 -> closeWithSwipe(true)
+                releasedChild.x < bottomView.width.div(2.0f).unaryMinus() -> openWithSwipe(true)
+                releasedChild.x > bottomView.width.div(2.0f).unaryMinus() -> closeWithSwipe(true)
             }
         } else if (swipeDirection == SwipeDirection.RIGHT) {
             when {
@@ -278,7 +266,7 @@ class SwipeLayout :
             ViewCompat.postInvalidateOnAnimation(this)
         } else {
             if (getIsLeftSwipe()) {
-                if (viewDragHelper.smoothSlideViewTo(topView, bottomView.width.unaryMinus(), paddingTop)) {
+                if (viewDragHelper.smoothSlideViewTo(topView, (bottomView.width + paddingRight).unaryMinus(), paddingTop)) {
                     ViewCompat.postInvalidateOnAnimation(this)
                 }
             } else {
@@ -311,7 +299,7 @@ class SwipeLayout :
 
     private fun openWithSwipe(isLeftSwipe: Boolean) {
         if (isLeftSwipe) {
-            if (viewDragHelper.settleCapturedViewAt(bottomView.width.unaryMinus(), paddingTop)) {
+            if (viewDragHelper.settleCapturedViewAt((bottomView.width + paddingRight).unaryMinus(), paddingTop)) {
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         } else if (!isLeftSwipe) {
