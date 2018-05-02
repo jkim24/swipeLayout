@@ -8,6 +8,7 @@ import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -48,7 +49,6 @@ class SwipeLayout :
     private var dragDistance : Float = 0f
     private var lastX = 0f
     private var isScrolling = false
-    private var mIsOpenBeforeInit = false
 
     constructor(context: Context?) : super(context) {
         init()
@@ -171,37 +171,36 @@ class SwipeLayout :
         super.onLayout(changed, left, top, right, bottom)
         topView.offsetLeftAndRight(topViewXOffSet)
         topView.offsetTopAndBottom(topViewYOffSet)
-//        if (mIsOpenBeforeInit) {
-//            openWithoutAnimation()
-//        } else {
-//            closeWithoutAnimation()
-//        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        event?.apply {
-            viewDragHelper.processTouchEvent(this)
-            gestureDetector.onTouchEvent(this)
+        event?.let {
+            viewDragHelper.processTouchEvent(it)
+            gestureDetector.onTouchEvent(it)
             return true
         }
         return true
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        viewDragHelper.processTouchEvent(ev!!)
-        gestureDetector.onTouchEvent(ev)
-        accumulateDragDist(ev)
+        ev?.let {
+            viewDragHelper.processTouchEvent(it)
+            gestureDetector.onTouchEvent(it)
+            accumulateDragDist(it)
 
-        val couldBecomeClick = couldBecomeClick(ev)
-        val settling = viewDragHelper.viewDragState == ViewDragHelper.STATE_SETTLING
-        val idleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
+            val couldBecomeClick = couldBecomeClick(it)
+            val settling = viewDragHelper.viewDragState == ViewDragHelper.STATE_SETTLING
+            val idleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
 
-        lastX = ev.x
-        return !couldBecomeClick && (settling || idleAfterScrolled)
+            lastX = it.x
+            return !couldBecomeClick && (settling || idleAfterScrolled)
+        }
+        return false
     }
 
     private fun couldBecomeClick(ev: MotionEvent): Boolean {
-        return isInMainView(ev) && !shouldInitiateADrag()
+//        return isInMainView(ev) && !shouldInitiateADrag()
+        return !shouldInitiateADrag()
     }
 
     private fun isInMainView(ev: MotionEvent): Boolean {
@@ -210,6 +209,7 @@ class SwipeLayout :
 
         val withinVertical = topView.top <= y && y <= topView.bottom
         val withinHorizontal = topView.left <= x && x <= topView.right
+        Log.e("isInMainView", (withinVertical && withinHorizontal).toString())
         return withinVertical && withinHorizontal
     }
 
@@ -271,50 +271,45 @@ class SwipeLayout :
         return Rect(l, paddingTop, l + measuredWidth, measuredHeight)
     }
 
-    fun open() {
-        if (getIsLeftSwipe()) {
-            if (viewDragHelper.smoothSlideViewTo(topView, bottomView.width.unaryMinus(), paddingTop)) {
-                ViewCompat.postInvalidateOnAnimation(this)
-            }
+    fun open(withAnimation : Boolean) {
+        if (!withAnimation) {
+            val rect = computeSurfaceLayoutArea(true)
+            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
+            ViewCompat.postInvalidateOnAnimation(this)
         } else {
-            if (viewDragHelper.smoothSlideViewTo(topView, bottomView.width + paddingLeft, paddingTop)) {
-                ViewCompat.postInvalidateOnAnimation(this)
+            if (getIsLeftSwipe()) {
+                if (viewDragHelper.smoothSlideViewTo(topView, bottomView.width.unaryMinus(), paddingTop)) {
+                    ViewCompat.postInvalidateOnAnimation(this)
+                }
+            } else {
+                if (viewDragHelper.smoothSlideViewTo(topView, bottomView.width + paddingLeft, paddingTop)) {
+                    ViewCompat.postInvalidateOnAnimation(this)
+                }
             }
         }
         state = State.OPEN
     }
 
-    fun close() {
-        if (getIsLeftSwipe()) {
-            if (viewDragHelper.smoothSlideViewTo(topView, paddingRight, paddingTop)) {
-                ViewCompat.postInvalidateOnAnimation(this)
-            }
+    fun close(withAnimation : Boolean) {
+        if (!withAnimation) {
+            val rect = computeSurfaceLayoutArea(false)
+            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
+            ViewCompat.postInvalidateOnAnimation(this)
         } else {
-            if (viewDragHelper.smoothSlideViewTo(topView, paddingLeft, paddingTop)) {
-                ViewCompat.postInvalidateOnAnimation(this)
+            if (getIsLeftSwipe()) {
+                if (viewDragHelper.smoothSlideViewTo(topView, paddingRight, paddingTop)) {
+                    ViewCompat.postInvalidateOnAnimation(this)
+                }
+            } else {
+                if (viewDragHelper.smoothSlideViewTo(topView, paddingLeft, paddingTop)) {
+                    ViewCompat.postInvalidateOnAnimation(this)
+                }
             }
         }
-        state = State.CLOSED
-    }
-
-    fun openWithoutAnimation() {
-        mIsOpenBeforeInit = true
-        val rect = computeSurfaceLayoutArea(true)
-        topView.layout(rect.left, rect.top, rect.right, rect.bottom)
-        ViewCompat.postInvalidateOnAnimation(this)
-        state = State.OPEN
-    }
-
-    fun closeWithoutAnimation() {
-        mIsOpenBeforeInit = false
-        val rect = computeSurfaceLayoutArea(false)
-        topView.layout(rect.left, rect.top, rect.right, rect.bottom)
-        ViewCompat.postInvalidateOnAnimation(this)
         state = State.CLOSED
     }
 
     private fun openWithSwipe(isLeftSwipe: Boolean) {
-        mIsOpenBeforeInit = true
         if (isLeftSwipe) {
             if (viewDragHelper.settleCapturedViewAt(bottomView.width.unaryMinus(), paddingTop)) {
                 ViewCompat.postInvalidateOnAnimation(this)
@@ -328,7 +323,6 @@ class SwipeLayout :
     }
 
     private fun closeWithSwipe(isLeftSwipe: Boolean) {
-        mIsOpenBeforeInit = false
         if (isLeftSwipe) {
             if (viewDragHelper.settleCapturedViewAt(paddingRight, paddingTop)) {
                 ViewCompat.postInvalidateOnAnimation(this)
