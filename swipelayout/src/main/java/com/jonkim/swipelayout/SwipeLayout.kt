@@ -9,7 +9,6 @@ import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -156,10 +155,10 @@ class SwipeLayout :
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        if (childCount >= 2) {
+        if (childCount == 2) {
             bottomView = getChildAt(0)
             topView = getChildAt(1)
-        }
+        } else throw Exception("Must have 2 child views")
     }
 
     override fun computeScroll() {
@@ -192,32 +191,17 @@ class SwipeLayout :
             gestureDetector.onTouchEvent(it)
             accumulateDragDist(it)
 
-            val couldBecomeClick = couldBecomeClick(it)
-            val settling = viewDragHelper.viewDragState == ViewDragHelper.STATE_SETTLING
-            val idleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
+            val isDragged = isDragged()
+            val isSettling = viewDragHelper.viewDragState == ViewDragHelper.STATE_SETTLING
+            val isIdleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
 
             lastX = it.x
-            return !couldBecomeClick && (settling || idleAfterScrolled)
+            return isDragged && (isSettling || isIdleAfterScrolled)
         }
         return false
     }
 
-    private fun couldBecomeClick(ev: MotionEvent): Boolean {
-//        return isInMainView(ev) && !shouldInitiateADrag()
-        return !shouldInitiateADrag()
-    }
-
-    private fun isInMainView(ev: MotionEvent): Boolean {
-        val x = ev.x
-        val y = ev.y
-
-        val withinVertical = topView.top <= y && y <= topView.bottom
-        val withinHorizontal = topView.left <= x && x <= topView.right
-        Log.e("isInMainView", (withinVertical && withinHorizontal).toString())
-        return withinVertical && withinHorizontal
-    }
-
-    private fun shouldInitiateADrag(): Boolean {
+    private fun isDragged(): Boolean {
         val minDistToInitiateDrag = viewDragHelper.touchSlop.toFloat()
         return dragDistance >= minDistToInitiateDrag
     }

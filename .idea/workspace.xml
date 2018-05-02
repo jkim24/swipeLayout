@@ -16,14 +16,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/jarAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/jarAnalysis.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskJars.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskJars.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt" afterPath="$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt" />
       <change beforePath="$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt" afterPath="$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt" />
-      <change beforePath="$PROJECT_DIR$/swipelayout/src/main/res/values/attrs.xml" afterPath="$PROJECT_DIR$/swipelayout/src/main/res/values/attrs.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,26 +47,24 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-          <file leaf-file-name="Adapter.kt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt">
+          <file leaf-file-name="SwipeLayout.kt" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="235">
-                  <caret line="110" column="61" lean-forward="false" selection-start-line="110" selection-start-column="61" selection-end-line="110" selection-end-column="61" />
+                <state relative-caret-position="568">
+                  <caret line="304" column="13" lean-forward="true" selection-start-line="304" selection-start-column="13" selection-end-line="304" selection-end-column="13" />
                   <folding>
-                    <element signature="e#38#288#0" expanded="true" />
+                    <element signature="e#32#497#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="SwipeLayout.kt" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt">
+          <file leaf-file-name="MainActivity.kt" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-270">
-                  <caret line="215" column="38" lean-forward="false" selection-start-line="215" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#32#521#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="535">
+                  <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -76,23 +73,35 @@
       </split-first>
       <split-second>
         <leaf>
+          <file leaf-file-name="Adapter.kt" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="505">
+                  <caret line="48" column="51" lean-forward="false" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
+                  <folding>
+                    <element signature="e#38#288#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="attrs.xml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/swipelayout/src/main/res/values/attrs.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="144">
-                  <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="35" />
+                <state relative-caret-position="180">
+                  <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="SwipeLayout.kt" pinned="false" current-in-tab="true">
+          <file leaf-file-name="SwipeLayout.kt" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1961">
-                  <caret line="190" column="48" lean-forward="false" selection-start-line="190" selection-start-column="48" selection-end-line="190" selection-end-column="48" />
+                <state relative-caret-position="487">
+                  <caret line="310" column="28" lean-forward="false" selection-start-line="310" selection-start-column="28" selection-end-line="310" selection-end-column="28" />
                   <folding>
-                    <element signature="e#32#521#0" expanded="true" />
+                    <element signature="e#32#497#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -103,16 +112,6 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="254">
                   <caret line="90" column="27" lean-forward="false" selection-start-line="90" selection-start-column="27" selection-end-line="90" selection-end-column="27" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="ViewDragHelper.java" pinned="false" current-in-tab="false">
-            <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-core-ui/27.1.1/266c369a3227be5afec33e11c964472269ff2a7c/support-core-ui-27.1.1-sources.jar!/android/support/v4/widget/ViewDragHelper.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="196">
-                  <caret line="367" column="25" lean-forward="false" selection-start-line="367" selection-start-column="15" selection-end-line="367" selection-end-column="25" />
                   <folding />
                 </state>
               </provider>
@@ -3302,9 +3301,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/bottom_list_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/second_bottom_list_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/third_bottom_list_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fourth_bottom_list_item.xml" />
         <option value="$PROJECT_DIR$/swipelayout/src/main/res/values/attrs.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt" />
         <option value="$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt" />
       </list>
     </option>
@@ -3426,7 +3425,7 @@
     <property name="DEBUGGABLE_PROCESS" value="com.jonkim.swipelayoutsample" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="DEBUGGER_ID" value="Auto" />
-    <property name="SearchEverywhereHistoryKey" value="ad&#9;FILE&#9;file:///Users/JonKim/Repos/swipeLayout/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt&#10;main&#9;FILE&#9;file:///Users/JonKim/Repos/swipeLayout/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt&#10;ma&#9;FILE&#9;file:///Users/JonKim/Repos/swipeLayout/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt" />
+    <property name="SearchEverywhereHistoryKey" value="mai&#9;FILE&#9;file:///Users/JonKim/Repos/swipeLayout/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt&#10;ad&#9;FILE&#9;file:///Users/JonKim/Repos/swipeLayout/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt&#10;main&#9;FILE&#9;file:///Users/JonKim/Repos/swipeLayout/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt&#10;ma&#9;FILE&#9;file:///Users/JonKim/Repos/swipeLayout/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -3622,7 +3621,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38050315" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38050315" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -3631,7 +3630,7 @@
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20518868" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20518868" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -3685,48 +3684,78 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>18</line>
+          <line>17</line>
           <properties />
           <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>290</line>
+          <line>274</line>
           <properties />
           <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>292</line>
+          <line>276</line>
           <properties />
           <option name="timeStamp" value="91" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>291</line>
+          <line>275</line>
           <properties />
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>271</line>
+          <line>255</line>
           <properties />
           <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>305</line>
+          <line>289</line>
           <properties />
           <option name="timeStamp" value="99" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
-          <line>306</line>
+          <line>290</line>
           <properties />
           <option name="timeStamp" value="100" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt</url>
+          <line>82</line>
+          <properties />
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
+          <line>252</line>
+          <properties />
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
+          <line>253</line>
+          <properties />
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt</url>
+          <line>251</line>
+          <properties />
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="101" />
+      <option name="time" value="109" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -3744,6 +3773,11 @@
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>rect</expression-string>
+        <language-id>kotlin</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>bottomView.width.unaryMinus()</expression-string>
         <language-id>kotlin</language-id>
@@ -3784,11 +3818,6 @@
         <language-id>kotlin</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>getChildAt(0).width</expression-string>
-        <language-id>kotlin</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
@@ -3823,7 +3852,7 @@
         <state relative-caret-position="256">
           <caret line="147" column="18" lean-forward="false" selection-start-line="147" selection-start-column="18" selection-end-line="147" selection-end-column="18" />
           <folding>
-            <element signature="e#32#521#0" expanded="true" />
+            <element signature="e#32#497#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4147,14 +4176,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1251">
-          <caret line="100" column="43" lean-forward="false" selection-start-line="100" selection-start-column="43" selection-end-line="100" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fourth_bottom_list_item.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -4177,13 +4198,19 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt">
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-27/android/widget/FrameLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="84" column="11" lean-forward="false" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-core-ui/27.1.1/266c369a3227be5afec33e11c964472269ff2a7c/support-core-ui-27.1.1-sources.jar!/android/support/v4/widget/ViewDragHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
-          <caret line="110" column="61" lean-forward="false" selection-start-line="110" selection-start-column="61" selection-end-line="110" selection-end-column="61" />
-          <folding>
-            <element signature="e#38#288#0" expanded="true" />
-          </folding>
+          <caret line="367" column="25" lean-forward="false" selection-start-line="367" selection-start-column="15" selection-end-line="367" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4195,36 +4222,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-27/android/widget/FrameLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="84" column="11" lean-forward="false" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-core-ui/27.1.1/266c369a3227be5afec33e11c964472269ff2a7c/support-core-ui-27.1.1-sources.jar!/android/support/v4/widget/ViewDragHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="367" column="25" lean-forward="false" selection-start-line="367" selection-start-column="15" selection-end-line="367" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/swipelayout/src/main/res/values/attrs.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="35" />
+        <state relative-caret-position="180">
+          <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/Adapter.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="48" column="51" lean-forward="false" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
+          <folding>
+            <element signature="e#38#288#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jonkim/swipelayoutsample/MainActivity.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/swipelayout/src/main/java/com/jonkim/swipelayout/SwipeLayout.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1961">
-          <caret line="190" column="48" lean-forward="false" selection-start-line="190" selection-start-column="48" selection-end-line="190" selection-end-column="48" />
+        <state relative-caret-position="568">
+          <caret line="304" column="13" lean-forward="true" selection-start-line="304" selection-start-column="13" selection-end-line="304" selection-end-column="13" />
           <folding>
-            <element signature="e#32#521#0" expanded="true" />
+            <element signature="e#32#497#0" expanded="true" />
           </folding>
         </state>
       </provider>
