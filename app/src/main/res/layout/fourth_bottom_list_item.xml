@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/secondLayoutTv"
         android:background="@color/colorAccent"
-        android:layout_width="60dp"
+        android:layout_width="330dp"
         android:layout_height="80dp" />
 
 </RelativeLayout>

@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="80dp"
+    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/friendsListImage"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="16dp" />
 
     <TextView
-        android:id="@+id/mainLayoutTv"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/friendsListNameText"
+        android:layout_toEndOf="@id/friendsListImage"
+        android:layout_toStartOf="@+id/friendsFavoriteButton"
+        android:layout_marginEnd="20dp"
+        android:maxLines="1"
         android:layout_centerVertical="true"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="test"/>
+        android:layout_toRightOf="@id/friendsListImage"
+        android:layout_toLeftOf="@+id/friendsFavoriteButton"
+        android:layout_marginRight="20dp"
+        android:text="Swipe Layout Test"
+        tools:ignore="UnknownId" />
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/item_divider" />
 
 </RelativeLayout>

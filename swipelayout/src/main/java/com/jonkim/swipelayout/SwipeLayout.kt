@@ -98,7 +98,7 @@ class SwipeLayout :
 
         override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
             isScrolling = true
-
+            //TODO check parents for recyclerView || listViews
             if (parent != null) parent.requestDisallowInterceptTouchEvent(true)
 
             return false
@@ -163,19 +163,19 @@ class SwipeLayout :
         if (viewDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this)
         } else {
-//            topViewXOffSet = topView.left
-//            topViewYOffSet = topView.top
+            topViewXOffSet = topView.left
+            topViewYOffSet = topView.top
         }
     }
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, left, top, right, bottom)
-//        topView.offsetLeftAndRight(topViewXOffSet)
-//        topView.offsetTopAndBottom(topViewYOffSet)
-        if (mIsOpenBeforeInit) {
-            openWithoutAnimation()
-        } else {
-            closeWithoutAnimation()
-        }
+        topView.offsetLeftAndRight(topViewXOffSet)
+        topView.offsetTopAndBottom(topViewYOffSet)
+//        if (mIsOpenBeforeInit) {
+//            openWithoutAnimation()
+//        } else {
+//            closeWithoutAnimation()
+//        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
