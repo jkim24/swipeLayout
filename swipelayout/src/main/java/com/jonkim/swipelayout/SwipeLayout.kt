@@ -44,7 +44,7 @@ class SwipeLayout :
     private lateinit var bottomView : View
     private var state : State = State.CLOSED
     private var dragSensitivity : Float = 1f
-    private var minDragSpeed : Int = 300
+    private var minDragVelocity : Int = 300
     private var topViewXOffSet : Int = 0
     private var topViewYOffSet : Int = 0
     private var dragDistance : Float = 0f
@@ -74,7 +74,7 @@ class SwipeLayout :
         typedArray?.apply {
             try {
                 swipeDirection = SwipeDirection.from(this.getInteger(R.styleable.SwipeLayout_swipeDirection, 0))
-                minDragSpeed = this.getInteger(R.styleable.SwipeLayout_minDragSpeed, 300)
+                minDragVelocity = this.getInteger(R.styleable.SwipeLayout_minDragVelocity, 300)
                 dragSensitivity = this.getFloat(R.styleable.SwipeLayout_dragSensitivity, 1f)
             } finally {
                 this.recycle()
@@ -221,15 +221,15 @@ class SwipeLayout :
     private fun handleOnViewRelease(releasedChild: View, xvel: Float) {
         if (swipeDirection == SwipeDirection.LEFT) {
             when {
-                xvel < minDragSpeed.unaryMinus() -> openWithSwipe(true)
-                xvel > minDragSpeed -> closeWithSwipe(true)
+                xvel < minDragVelocity.unaryMinus() -> openWithSwipe(true)
+                xvel > minDragVelocity -> closeWithSwipe(true)
                 releasedChild.x < bottomView.width.div(2.0f).unaryMinus() -> openWithSwipe(true)
                 releasedChild.x > bottomView.width.div(2.0f).unaryMinus() -> closeWithSwipe(true)
             }
         } else if (swipeDirection == SwipeDirection.RIGHT) {
             when {
-                xvel > minDragSpeed -> openWithSwipe(false)
-                xvel < minDragSpeed.unaryMinus() -> closeWithSwipe(false)
+                xvel > minDragVelocity -> openWithSwipe(false)
+                xvel < minDragVelocity.unaryMinus() -> closeWithSwipe(false)
                 releasedChild.x > bottomView.width.div(2.0f) -> openWithSwipe(false)
                 releasedChild.x < bottomView.width.div(2.0f) -> closeWithSwipe(false)
             }
