@@ -86,11 +86,8 @@ class SwipeLayout :
     }
 
     private val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
-        var hasDisallowed = false
-
         override fun onDown(e: MotionEvent?): Boolean {
             isScrolling = false
-            hasDisallowed = false
             return true
         }
 
