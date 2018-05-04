@@ -66,6 +66,22 @@ class MainActivity :
         list.add(Adapter.SecondViewHolder.Second())
         list.add(Adapter.ThirdViewHolder.Third())
         list.add(Adapter.FourthViewHolder.Fourth())
+        list.add(Adapter.ViewHolder.First())
+        list.add(Adapter.SecondViewHolder.Second())
+        list.add(Adapter.ThirdViewHolder.Third())
+        list.add(Adapter.FourthViewHolder.Fourth())
+        list.add(Adapter.ViewHolder.First())
+        list.add(Adapter.SecondViewHolder.Second())
+        list.add(Adapter.ThirdViewHolder.Third())
+        list.add(Adapter.FourthViewHolder.Fourth())
+        list.add(Adapter.ViewHolder.First())
+        list.add(Adapter.SecondViewHolder.Second())
+        list.add(Adapter.ThirdViewHolder.Third())
+        list.add(Adapter.FourthViewHolder.Fourth())
+        list.add(Adapter.ViewHolder.First())
+        list.add(Adapter.SecondViewHolder.Second())
+        list.add(Adapter.ThirdViewHolder.Third())
+        list.add(Adapter.FourthViewHolder.Fourth())
         return list
     }
 

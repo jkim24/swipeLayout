@@ -204,8 +204,7 @@ class SwipeLayout :
     }
 
     private fun accumulateDragDist(ev: MotionEvent) {
-        val action = ev.action
-        if (action == MotionEvent.ACTION_DOWN) {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
             dragDistance = 0f
             return
         }
