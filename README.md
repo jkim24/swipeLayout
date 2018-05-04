@@ -1,9 +1,21 @@
 # swipeLayout
 
+### Goal:
+In the last project we were developing for a client, we needed a swipe layout that would be able to swipe open with user gestures but also programmatically. While we found a few libraries that could do both, none could do both well. My goal was to make a swipe library that does both well and one that offers users some useful customization options.
 
+### How it works:
+SwipeLayout uses a [FrameLayout](https://developer.android.com/reference/android/widget/FrameLayout) to hold the two child views and the [ViewDragHelper](https://developer.android.com/reference/android/support/v4/widget/ViewDragHelper) class to manage the swipe behavior.
+
+## Getting started
+
+### Requirements:
+//TODO
+### Dependencies:
+//TODO
 ### How to use:
 1. Create two child views. A top view that's first shown to the user and a bottom view that will show once the layout is swiped.
-    - When creating the bottom view, set the view's position to the side you want the swipe to begin.
+    - The height of both views should be the same.
+    - When creating the bottom view, set the view's position to the side you want the swipe to begin from (layout_gravity="end" should be set if you want the layout to swipe left).
     ```bash
     <RelativeLayout 
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +33,9 @@
     ```
 
 
-2. Create the swipeLayout with the 2 child views
+
+2. Create the swipeLayout with the 2 child views.
+    - The first child view in the SwipeLayout will be the bottom view and the second view will be the top view.
     - You can specify swipe direction, drag sensitivity and minimum drag velocity through the xml attributes. It's not required as it'll default to the values you see below. 
 ```bash
 <com.jonkim.swipelayout.SwipeLayout 
