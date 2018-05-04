@@ -46,8 +46,8 @@ class Adapter(val list : List<Any>, val context: Context, var listener : Listene
         var topView = itemView.findViewById<View>(R.id.topView)
         var bottomView = itemView.findViewById<View>(R.id.bottomView)
         fun bind(item: First) {
-            if (item.swiped) swipeLayout.open(false)
-            else swipeLayout.close(false)
+            if (item.swiped) swipeLayout.open(true)
+            else swipeLayout.close(true)
 
             topView.setOnClickListener {
                 listener.onClick("TopView Clicked")
@@ -68,8 +68,8 @@ class Adapter(val list : List<Any>, val context: Context, var listener : Listene
         var bottomView = itemView.findViewById<View>(R.id.bottomView)
 
         fun bind(item: Second) {
-            if (item.swiped) swipeLayout.open(false)
-            else swipeLayout.close(false)
+            if (item.swiped) swipeLayout.open(true)
+            else swipeLayout.close(true)
 
             topView.setOnClickListener {
                 listener.onClick("TopView Clicked")
@@ -90,8 +90,8 @@ class Adapter(val list : List<Any>, val context: Context, var listener : Listene
         var bottomView = itemView.findViewById<View>(R.id.bottomView)
 
         fun bind(item: Third) {
-            if (item.swiped) swipeLayout.open(false)
-            else swipeLayout.close(false)
+            if (item.swiped) swipeLayout.open(true)
+            else swipeLayout.close(true)
 
             topView.setOnClickListener {
                 listener.onClick("TopView Clicked")
@@ -111,8 +111,8 @@ class Adapter(val list : List<Any>, val context: Context, var listener : Listene
         var bottomView = itemView.findViewById<View>(R.id.bottomView)
 
         fun bind(item: Fourth) {
-            if (item.swiped) swipeLayout.open(false)
-            else swipeLayout.close(false)
+            if (item.swiped) swipeLayout.open(true)
+            else swipeLayout.close(true)
 
             topView.setOnClickListener {
                 listener.onClick("TopView Clicked")
