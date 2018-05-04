@@ -248,6 +248,8 @@ class SwipeLayout :
             val rect = computeSurfaceLayoutArea(true)
             topView.layout(rect.left, rect.top, rect.right, rect.bottom)
             ViewCompat.postInvalidateOnAnimation(this)
+            topViewXOffSet = topView.left
+            topViewYOffSet = topView.top
         } else {
             if (getIsLeftSwipe()) {
                 if (viewDragHelper.smoothSlideViewTo(topView, (bottomView.width + paddingRight).unaryMinus(), paddingTop)) {
@@ -267,6 +269,8 @@ class SwipeLayout :
             val rect = computeSurfaceLayoutArea(false)
             topView.layout(rect.left, rect.top, rect.right, rect.bottom)
             ViewCompat.postInvalidateOnAnimation(this)
+            topViewXOffSet = topView.left
+            topViewYOffSet = topView.top
         } else {
             if (getIsLeftSwipe()) {
                 if (viewDragHelper.smoothSlideViewTo(topView, paddingRight, paddingTop)) {
