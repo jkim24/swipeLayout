@@ -98,7 +98,7 @@ class SwipeLayout :
 
         override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
             isScrolling = true
-            //TODO check parents for recyclerView || listViews
+            //TODO check parents for recyclerView || listViews in case swipeLayout isn't a direct child view of a RecyclerView or ListView etc.
             if (parent != null) parent.requestDisallowInterceptTouchEvent(true)
 
             return false
