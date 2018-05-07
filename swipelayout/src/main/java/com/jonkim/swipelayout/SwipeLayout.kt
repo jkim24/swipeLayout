@@ -9,6 +9,7 @@ import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -42,6 +43,7 @@ class SwipeLayout :
     private lateinit var gestureDetector : GestureDetectorCompat
     private lateinit var topView : View
     private lateinit var bottomView : View
+    private var correctlySetup = false
     private var state : State = State.CLOSED
     private var dragSensitivity : Float = 1f
     private var minDragVelocity : Int = 300
@@ -108,7 +110,9 @@ class SwipeLayout :
     private val dragHelperCallback = object : ViewDragHelper.Callback() {
 
         override fun tryCaptureView(child: View, pointerId: Int): Boolean {
-            viewDragHelper.captureChildView(topView, pointerId)
+            if (correctlySetup) {
+                viewDragHelper.captureChildView(topView, pointerId)
+            }
             return false
         }
 
@@ -121,79 +125,96 @@ class SwipeLayout :
 
         override fun onViewReleased(releasedChild: View, xvel: Float, yvel: Float) {
             super.onViewReleased(releasedChild, xvel, yvel)
-            handleOnViewRelease(releasedChild, xvel)
+            if (correctlySetup) {
+                handleOnViewRelease(releasedChild, xvel)
+            }
         }
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
-            when (swipeDirection) {
-                SwipeDirection.LEFT -> {
-                    if (left > paddingRight) {
-                        return paddingRight
-                    }
-                    if (left < (paddingRight + bottomView.width).unaryMinus()) {
-                        return (paddingRight + bottomView.width).unaryMinus()
-                    }
-                    return left
+            if (correctlySetup) {
+                when (swipeDirection) {
+                    SwipeDirection.LEFT -> {
+                        if (left > paddingRight) {
+                            return paddingRight
+                        }
+                        if (left < (paddingRight + bottomView.width).unaryMinus()) {
+                            return (paddingRight + bottomView.width).unaryMinus()
+                        }
+                        return left
 
-                }
-                SwipeDirection.RIGHT -> {
-                    if (left < paddingLeft) {
-                        return paddingLeft
                     }
-                    if (left > paddingLeft + bottomView.width) {
-                        return paddingLeft + bottomView.width
+                    SwipeDirection.RIGHT -> {
+                        if (left < paddingLeft) {
+                            return paddingLeft
+                        }
+                        if (left > paddingLeft + bottomView.width) {
+                            return paddingLeft + bottomView.width
+                        }
+                        return left
                     }
-                    return left
+                    else -> return super.clampViewPositionHorizontal(child, left, dx)
                 }
-                else -> return super.clampViewPositionHorizontal(child, left, dx)
-            }
+            } else return 0
         }
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
         if (childCount == 2) {
+            correctlySetup = true
             bottomView = getChildAt(0)
             topView = getChildAt(1)
-        } else throw Exception("Must have 2 child views")
+        } else {
+            correctlySetup = false
+            //Log.e("onFinishInflate", "Must have 2 child views for swipeLayout to behave correctly")
+            //throw Exception("Must have 2 child views for swipeLayout to behave correctly")
+        }
     }
 
     override fun computeScroll() {
         super.computeScroll()
-        if (viewDragHelper.continueSettling(true)) {
-            ViewCompat.postInvalidateOnAnimation(this)
-        } else {
-            topViewXOffSet = topView.left
-            topViewYOffSet = topView.top
+        if (correctlySetup) {
+            if (viewDragHelper.continueSettling(true)) {
+                ViewCompat.postInvalidateOnAnimation(this)
+            } else {
+                topViewXOffSet = topView.left
+                topViewYOffSet = topView.top
+            }
         }
     }
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        topView.offsetLeftAndRight(topViewXOffSet)
-        topView.offsetTopAndBottom(topViewYOffSet)
+        if (correctlySetup) {
+            topView.offsetLeftAndRight(topViewXOffSet)
+            topView.offsetTopAndBottom(topViewYOffSet)
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        event?.let {
-            viewDragHelper.processTouchEvent(it)
-            gestureDetector.onTouchEvent(it)
-            return true
+        if (correctlySetup) {
+            event?.let {
+                viewDragHelper.processTouchEvent(it)
+                gestureDetector.onTouchEvent(it)
+                return true
+            }
         }
         return true
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        ev?.let {
-            viewDragHelper.processTouchEvent(it)
-            gestureDetector.onTouchEvent(it)
-            accumulateDragDist(it)
+        if (correctlySetup) {
+            ev?.let {
+                viewDragHelper.processTouchEvent(it)
+                gestureDetector.onTouchEvent(it)
+                accumulateDragDist(it)
 
-            val isDragged = isDragged()
-            val isSettling = viewDragHelper.viewDragState == ViewDragHelper.STATE_SETTLING
-            val isIdleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
+                val isDragged = isDragged()
+                val isSettling = viewDragHelper.viewDragState == ViewDragHelper.STATE_SETTLING
+                val isIdleAfterScrolled = viewDragHelper.viewDragState == ViewDragHelper.STATE_IDLE && isScrolling
 
-            lastX = it.x
-            return isDragged && (isSettling || isIdleAfterScrolled)
+                lastX = it.x
+                return isDragged && (isSettling || isIdleAfterScrolled)
+            }
         }
         return false
     }
@@ -244,45 +265,49 @@ class SwipeLayout :
     }
 
     fun open(withAnimation : Boolean) {
-        if (!withAnimation) {
-            val rect = computeSurfaceLayoutArea(true)
-            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
-            ViewCompat.postInvalidateOnAnimation(this)
-            topViewXOffSet = topView.left
-            topViewYOffSet = topView.top
-        } else {
-            if (getIsLeftSwipe()) {
-                if (viewDragHelper.smoothSlideViewTo(topView, (bottomView.width + paddingRight).unaryMinus(), paddingTop)) {
-                    ViewCompat.postInvalidateOnAnimation(this)
-                }
+        if (correctlySetup) {
+            if (!withAnimation) {
+                val rect = computeSurfaceLayoutArea(true)
+                topView.layout(rect.left, rect.top, rect.right, rect.bottom)
+                ViewCompat.postInvalidateOnAnimation(this)
+                topViewXOffSet = topView.left
+                topViewYOffSet = topView.top
             } else {
-                if (viewDragHelper.smoothSlideViewTo(topView, bottomView.width + paddingLeft, paddingTop)) {
-                    ViewCompat.postInvalidateOnAnimation(this)
+                if (getIsLeftSwipe()) {
+                    if (viewDragHelper.smoothSlideViewTo(topView, (bottomView.width + paddingRight).unaryMinus(), paddingTop)) {
+                        ViewCompat.postInvalidateOnAnimation(this)
+                    }
+                } else {
+                    if (viewDragHelper.smoothSlideViewTo(topView, bottomView.width + paddingLeft, paddingTop)) {
+                        ViewCompat.postInvalidateOnAnimation(this)
+                    }
                 }
             }
+            state = State.OPEN
         }
-        state = State.OPEN
     }
 
     fun close(withAnimation : Boolean) {
-        if (!withAnimation) {
-            val rect = computeSurfaceLayoutArea(false)
-            topView.layout(rect.left, rect.top, rect.right, rect.bottom)
-            ViewCompat.postInvalidateOnAnimation(this)
-            topViewXOffSet = topView.left
-            topViewYOffSet = topView.top
-        } else {
-            if (getIsLeftSwipe()) {
-                if (viewDragHelper.smoothSlideViewTo(topView, paddingRight, paddingTop)) {
-                    ViewCompat.postInvalidateOnAnimation(this)
-                }
+        if (correctlySetup) {
+            if (!withAnimation) {
+                val rect = computeSurfaceLayoutArea(false)
+                topView.layout(rect.left, rect.top, rect.right, rect.bottom)
+                ViewCompat.postInvalidateOnAnimation(this)
+                topViewXOffSet = topView.left
+                topViewYOffSet = topView.top
             } else {
-                if (viewDragHelper.smoothSlideViewTo(topView, paddingLeft, paddingTop)) {
-                    ViewCompat.postInvalidateOnAnimation(this)
+                if (getIsLeftSwipe()) {
+                    if (viewDragHelper.smoothSlideViewTo(topView, paddingRight, paddingTop)) {
+                        ViewCompat.postInvalidateOnAnimation(this)
+                    }
+                } else {
+                    if (viewDragHelper.smoothSlideViewTo(topView, paddingLeft, paddingTop)) {
+                        ViewCompat.postInvalidateOnAnimation(this)
+                    }
                 }
             }
+            state = State.CLOSED
         }
-        state = State.CLOSED
     }
 
     private fun openWithSwipe(isLeftSwipe: Boolean) {
