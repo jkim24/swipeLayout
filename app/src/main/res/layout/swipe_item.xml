@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jonkim.swipelayout.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe"
+    android:layout_alignParentTop="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    app:swipeDirection="left">
+
+    <include
+        android:id="@+id/bottomView"
+        layout="@layout/bottom_list_item"/>
+
+    <include
+        android:id="@+id/topView"
+        layout="@layout/top_list_item"/>
+
+</com.jonkim.swipelayout.SwipeLayout>
